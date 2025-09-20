@@ -1,0 +1,968 @@
+[
+    {
+        "block": "Ancient Debris",
+        "variants": "Ancient Debris"
+    },
+    {
+        "block": "Andesite",
+        "variants": [
+            "Andesite",
+            "Polished Andesite"
+        ]
+    },
+    {
+        "block": "Bamboo Mosaic",
+        "variants": "Bamboo Mosaic"
+    },
+    {
+        "block": "Barrel",
+        "variants": "Barrel"
+    },
+    {
+        "block": "Barrier",
+        "variants": "Barrier"
+    },
+    {
+        "block": "Basalt",
+        "variants": [
+            "Basalt",
+            "Polished Basalt",
+            "Smooth Basalt"
+        ]
+    },
+    {
+        "block": "Bedrock",
+        "variants": "Bedrock"
+    },
+    {
+        "block": "Bee Nest",
+        "variants": "Bee Nest"
+    },
+    {
+        "block": "Beehive",
+        "variants": "Beehive"
+    },
+    {
+        "block": "Blackstone",
+        "variants": [
+            "Blackstone",
+            "Chiseled Polished Blackstone",
+            "Cracked Polished Blackstone Bricks",
+            "Polished Blackstone",
+            "Polished Blackstone Bricks"
+        ]
+    },
+    {
+        "block": "Blast Furnace",
+        "variants": "Blast Furnace"
+    },
+    {
+        "block": "Block of Amethyst",
+        "variants": "Block of Amethyst"
+    },
+    {
+        "block": "Block of Bamboo",
+        "variants": "Block of Bamboo"
+    },
+    {
+        "block": "Block of Coal",
+        "variants": "Block of Coal"
+    },
+    {
+        "block": "Block of Copper",
+        "variants": [
+            "Block of Copper",
+            "Cut Copper",
+            "Exposed Copper",
+            "Exposed Cut Copper",
+            "Oxidized Copper",
+            "Oxidized Cut Copper",
+            "Waxed Block of Copper",
+            "Waxed Cut Copper",
+            "Waxed Exposed Copper",
+            "Waxed Exposed Cut Copper",
+            "Waxed Oxidized Copper",
+            "Waxed Oxidized Cut Copper",
+            "Waxed Weathered Copper",
+            "Waxed Weathered Cut Copper",
+            "Weathered Copper",
+            "Weathered Cut Copper"
+        ]
+    },
+    {
+        "block": "Block of Diamond",
+        "variants": "Block of Diamond"
+    },
+    {
+        "block": "Block of Emerald",
+        "variants": "Block of Emerald"
+    },
+    {
+        "block": "Block of Gold",
+        "variants": "Block of Gold"
+    },
+    {
+        "block": "Block of Iron",
+        "variants": "Block of Iron"
+    },
+    {
+        "block": "Block of Lapis Lazuli",
+        "variants": "Block of Lapis Lazuli"
+    },
+    {
+        "block": "Block of Netherite",
+        "variants": "Block of Netherite"
+    },
+    {
+        "block": "Block of Quartz",
+        "variants": [
+            "Block of Quartz",
+            "Chiseled Quartz Block",
+            "Quartz Bricks",
+            "Quartz Pillar",
+            "Smooth Quartz Block"
+        ]
+    },
+    {
+        "block": "Block of Raw Copper",
+        "variants": "Block of Raw Copper"
+    },
+    {
+        "block": "Block of Raw Gold",
+        "variants": "Block of Raw Gold"
+    },
+    {
+        "block": "Block of Raw Iron",
+        "variants": "Block of Raw Iron"
+    },
+    {
+        "block": "Block of Stripped Bamboo",
+        "variants": "Block of Stripped Bamboo"
+    },
+    {
+        "block": "Blue Ice",
+        "variants": "Blue Ice"
+    },
+    {
+        "block": "Bone Block",
+        "variants": "Bone Block"
+    },
+    {
+        "block": "Bookshelf",
+        "variants": "Bookshelf"
+    },
+    {
+        "block": "Bricks",
+        "variants": "Bricks"
+    },
+    {
+        "block": "Budding Amethyst",
+        "variants": "Budding Amethyst"
+    },
+    {
+        "block": "Calcite",
+        "variants": "Calcite"
+    },
+    {
+        "block": "Cartography Table",
+        "variants": "Cartography Table"
+    },
+    {
+        "block": "Chiseled Bookshelf",
+        "variants": "Chiseled Bookshelf"
+    },
+    {
+        "block": "Chiseled Copper",
+        "variants": [
+            "Chiseled Copper",
+            "Exposed Chiseled Copper",
+            "Oxidized Chiseled Copper",
+            "Waxed Chiseled Copper",
+            "Waxed Exposed Chiseled Copper",
+            "Waxed Oxidized Chiseled Copper",
+            "Waxed Weathered Chiseled Copper",
+            "Weathered Chiseled Copper"
+        ]
+    },
+    {
+        "block": "Chiseled Tuff",
+        "variants": "Chiseled Tuff"
+    },
+    {
+        "block": "Chiseled Tuff Bricks",
+        "variants": "Chiseled Tuff Bricks"
+    },
+    {
+        "block": "Clay",
+        "variants": "Clay"
+    },
+    {
+        "block": "Coal Ore",
+        "variants": [
+            "Coal Ore",
+            "Deepslate Coal Ore"
+        ]
+    },
+    {
+        "block": "Coarse Dirt",
+        "variants": "Coarse Dirt"
+    },
+    {
+        "block": "Cobbled Deepslate",
+        "variants": [
+            "Chiseled Deepslate",
+            "Cobbled Deepslate",
+            "Cracked Deepslate Bricks",
+            "Cracked Deepslate Tiles",
+            "Deepslate Bricks",
+            "Deepslate Tiles",
+            "Polished Deepslate"
+        ]
+    },
+    {
+        "block": "Cobblestone",
+        "variants": [
+            "Cobblestone",
+            "Infested Cobblestone",
+            "Mossy Cobblestone"
+        ]
+    },
+    {
+        "block": "Command Blocks",
+        "variants": [
+            "Chain Command Block",
+            "Command Block",
+            "Repeating Command Block"
+        ]
+    },
+    {
+        "block": "Concrete",
+        "variants": [
+            "Black Concrete",
+            "Blue Concrete",
+            "Brown Concrete",
+            "Cyan Concrete",
+            "Gray Concrete",
+            "Green Concrete",
+            "Light Blue Concrete",
+            "Light Gray Concrete",
+            "Lime Concrete",
+            "Magenta Concrete",
+            "Orange Concrete",
+            "Pink Concrete",
+            "Purple Concrete",
+            "Red Concrete",
+            "White Concrete",
+            "Yellow Concrete"
+        ]
+    },
+    {
+        "block": "Concrete Powder",
+        "variants": [
+            "Black Concrete Powder",
+            "Blue Concrete Powder",
+            "Brown Concrete Powder",
+            "Cyan Concrete Powder",
+            "Gray Concrete Powder",
+            "Green Concrete Powder",
+            "Light Blue Concrete Powder",
+            "Light Gray Concrete Powder",
+            "Lime Concrete Powder",
+            "Magenta Concrete Powder",
+            "Orange Concrete Powder",
+            "Pink Concrete Powder",
+            "Purple Concrete Powder",
+            "Red Concrete Powder",
+            "White Concrete Powder",
+            "Yellow Concrete Powder"
+        ]
+    },
+    {
+        "block": "Copper Ore",
+        "variants": [
+            "Copper Ore",
+            "Deepslate Copper Ore"
+        ]
+    },
+    {
+        "block": "Coral Blocks",
+        "variants": [
+            "Brain Coral Block",
+            "Bubble Coral Block",
+            "Dead Brain Coral Block",
+            "Dead Bubble Coral Block",
+            "Dead Fire Coral Block",
+            "Dead Horn Coral Block",
+            "Dead Tube Coral Block",
+            "Fire Coral Block",
+            "Horn Coral Block",
+            "Tube Coral Block"
+        ]
+    },
+    {
+        "block": "Crafter",
+        "variants": "Crafter"
+    },
+    {
+        "block": "Crafting Table",
+        "variants": "Crafting Table"
+    },
+    {
+        "block": "Creaking Heart",
+        "variants": "Creaking Heart"
+    },
+    {
+        "block": "Crying Obsidian",
+        "variants": "Crying Obsidian"
+    },
+    {
+        "block": "Deepslate",
+        "variants": [
+            "Deepslate",
+            "Infested Deepslate"
+        ]
+    },
+    {
+        "block": "Diamond Ore",
+        "variants": [
+            "Deepslate Diamond Ore",
+            "Diamond Ore"
+        ]
+    },
+    {
+        "block": "Diorite",
+        "variants": [
+            "Diorite",
+            "Polished Diorite"
+        ]
+    },
+    {
+        "block": "Dirt",
+        "variants": [
+            "Dirt",
+            "Rooted Dirt"
+        ]
+    },
+    {
+        "block": "Dispenser",
+        "variants": "Dispenser"
+    },
+    {
+        "block": "Dried Kelp Block",
+        "variants": "Dried Kelp Block"
+    },
+    {
+        "block": "Dripstone Block",
+        "variants": "Dripstone Block"
+    },
+    {
+        "block": "Dropper",
+        "variants": "Dropper"
+    },
+    {
+        "block": "Emerald Ore",
+        "variants": [
+            "Deepslate Emerald Ore",
+            "Emerald Ore"
+        ]
+    },
+    {
+        "block": "End Stone",
+        "variants": "End Stone"
+    },
+    {
+        "block": "End Stone Bricks",
+        "variants": "End Stone Bricks"
+    },
+    {
+        "block": "Fletching Table",
+        "variants": "Fletching Table"
+    },
+    {
+        "block": "Froglights",
+        "variants": [
+            "Ochre Froglight",
+            "Pearlescent Froglight",
+            "Verdant Froglight"
+        ]
+    },
+    {
+        "block": "Furnace",
+        "variants": "Furnace"
+    },
+    {
+        "block": "Gilded Blackstone",
+        "variants": "Gilded Blackstone"
+    },
+    {
+        "block": "Glazed Terracotta",
+        "variants": [
+            "Black Glazed Terracotta",
+            "Blue Glazed Terracotta",
+            "Brown Glazed Terracotta",
+            "Cyan Glazed Terracotta",
+            "Gray Glazed Terracotta",
+            "Green Glazed Terracotta",
+            "Light Blue Glazed Terracotta",
+            "Light Gray Glazed Terracotta",
+            "Lime Glazed Terracotta",
+            "Magenta Glazed Terracotta",
+            "Orange Glazed Terracotta",
+            "Pink Glazed Terracotta",
+            "Purple Glazed Terracotta",
+            "Red Glazed Terracotta",
+            "White Glazed Terracotta",
+            "Yellow Glazed Terracotta"
+        ]
+    },
+    {
+        "block": "Gold Ore",
+        "variants": [
+            "Deepslate Gold Ore",
+            "Gold Ore"
+        ]
+    },
+    {
+        "block": "Granite",
+        "variants": [
+            "Granite",
+            "Polished Granite"
+        ]
+    },
+    {
+        "block": "Grass Block",
+        "variants": "Grass Block"
+    },
+    {
+        "block": "Gravel",
+        "variants": "Gravel"
+    },
+    {
+        "block": "Hay Bale",
+        "variants": "Hay Bale"
+    },
+    {
+        "block": "Honeycomb Block",
+        "variants": "Honeycomb Block"
+    },
+    {
+        "block": "Hyphae",
+        "variants": [
+            "Crimson Hyphae",
+            "Stripped Crimson Hyphae",
+            "Stripped Warped Hyphae",
+            "Warped Hyphae"
+        ]
+    },
+    {
+        "block": "Iron Ore",
+        "variants": [
+            "Deepslate Iron Ore",
+            "Iron Ore"
+        ]
+    },
+    {
+        "block": "Jack o'Lantern",
+        "variants": "Jack o'Lantern"
+    },
+    {
+        "block": "Jigsaw Block",
+        "variants": "Jigsaw Block"
+    },
+    {
+        "block": "Jukebox",
+        "variants": "Jukebox"
+    },
+    {
+        "block": "Lapis Lazuli Ore",
+        "variants": [
+            "Deepslate Lapis Lazuli Ore",
+            "Lapis Lazuli Ore"
+        ]
+    },
+    {
+        "block": "Lodestone",
+        "variants": "Lodestone"
+    },
+    {
+        "block": "Logs",
+        "variants": [
+            "Acacia Log",
+            "Birch Log",
+            "Cherry Log",
+            "Dark Oak Log",
+            "Jungle Log",
+            "Mangrove Log",
+            "Oak Log",
+            "Pale Oak Log",
+            "Spruce Log",
+            "Stripped Acacia Log",
+            "Stripped Birch Log",
+            "Stripped Cherry Log",
+            "Stripped Dark Oak Log",
+            "Stripped Jungle Log",
+            "Stripped Mangrove Log",
+            "Stripped Oak Log",
+            "Stripped Pale Oak Log",
+            "Stripped Spruce Log"
+        ]
+    },
+    {
+        "block": "Loom",
+        "variants": "Loom"
+    },
+    {
+        "block": "Magma Block",
+        "variants": "Magma Block"
+    },
+    {
+        "block": "Mangrove Roots",
+        "variants": "Mangrove Roots"
+    },
+    {
+        "block": "Melon",
+        "variants": "Melon"
+    },
+    {
+        "block": "Moss Block",
+        "variants": "Moss Block"
+    },
+    {
+        "block": "Mud Bricks",
+        "variants": "Mud Bricks"
+    },
+    {
+        "block": "Muddy Mangrove Roots",
+        "variants": "Muddy Mangrove Roots"
+    },
+    {
+        "block": "Mushroom Blocks",
+        "variants": [
+            "Brown Mushroom Block",
+            "Mushroom Stem",
+            "Red Mushroom Block"
+        ]
+    },
+    {
+        "block": "Mycelium",
+        "variants": "Mycelium"
+    },
+    {
+        "block": "Nether Bricks",
+        "variants": [
+            "Chiseled Nether Bricks",
+            "Cracked Nether Bricks",
+            "Nether Bricks",
+            "Red Nether Bricks"
+        ]
+    },
+    {
+        "block": "Nether Gold Ore",
+        "variants": "Nether Gold Ore"
+    },
+    {
+        "block": "Nether Quartz Ore",
+        "variants": "Nether Quartz Ore"
+    },
+    {
+        "block": "Netherrack",
+        "variants": "Netherrack"
+    },
+    {
+        "block": "Note Block",
+        "variants": "Note Block"
+    },
+    {
+        "block": "Nylium",
+        "variants": [
+            "Crimson Nylium",
+            "Warped Nylium"
+        ]
+    },
+    {
+        "block": "Obsidian",
+        "variants": "Obsidian"
+    },
+    {
+        "block": "Packed Ice",
+        "variants": "Packed Ice"
+    },
+    {
+        "block": "Packed Mud",
+        "variants": "Packed Mud"
+    },
+    {
+        "block": "Pale Moss Block",
+        "variants": "Pale Moss Block"
+    },
+    {
+        "block": "Planks",
+        "variants": [
+            "Acacia Planks",
+            "Bamboo Planks",
+            "Birch Planks",
+            "Cherry Planks",
+            "Crimson Planks",
+            "Dark Oak Planks",
+            "Jungle Planks",
+            "Mangrove Planks",
+            "Oak Planks",
+            "Pale Oak Planks",
+            "Spruce Planks",
+            "Warped Planks"
+        ]
+    },
+    {
+        "block": "Podzol",
+        "variants": "Podzol"
+    },
+    {
+        "block": "Polished Tuff",
+        "variants": "Polished Tuff"
+    },
+    {
+        "block": "Prismarine",
+        "variants": [
+            "Dark Prismarine",
+            "Prismarine",
+            "Prismarine Bricks"
+        ]
+    },
+    {
+        "block": "Pumpkin",
+        "variants": [
+            "Carved Pumpkin",
+            "Pumpkin"
+        ]
+    },
+    {
+        "block": "Purpur Block",
+        "variants": [
+            "Purpur Block",
+            "Purpur Pillar"
+        ]
+    },
+    {
+        "block": "Red Sand",
+        "variants": "Red Sand"
+    },
+    {
+        "block": "Red Sandstone",
+        "variants": [
+            "Chiseled Red Sandstone",
+            "Cut Red Sandstone",
+            "Red Sandstone",
+            "Smooth Red Sandstone"
+        ]
+    },
+    {
+        "block": "Redstone Lamp",
+        "variants": "Redstone Lamp"
+    },
+    {
+        "block": "Redstone Ore",
+        "variants": [
+            "Deepslate Redstone Ore",
+            "Redstone Ore"
+        ]
+    },
+    {
+        "block": "Reinforced Deepslate",
+        "variants": "Reinforced Deepslate"
+    },
+    {
+        "block": "Resin Block",
+        "variants": "Block of Resin"
+    },
+    {
+        "block": "Resin Bricks",
+        "variants": [
+            "Chiseled Resin Bricks",
+            "Resin Bricks"
+        ]
+    },
+    {
+        "block": "Respawn Anchor",
+        "variants": "Respawn Anchor"
+    },
+    {
+        "block": "Sand",
+        "variants": "Sand"
+    },
+    {
+        "block": "Sandstone",
+        "variants": [
+            "Chiseled Sandstone",
+            "Cut Sandstone",
+            "Sandstone",
+            "Smooth Sandstone"
+        ]
+    },
+    {
+        "block": "Sculk",
+        "variants": "Sculk"
+    },
+    {
+        "block": "Sculk Catalyst",
+        "variants": "Sculk Catalyst"
+    },
+    {
+        "block": "Shroomlight",
+        "variants": "Shroomlight"
+    },
+    {
+        "block": "Shulker Box",
+        "variants": [
+            "Black Shulker Box",
+            "Blue Shulker Box",
+            "Brown Shulker Box",
+            "Cyan Shulker Box",
+            "Gray Shulker Box",
+            "Green Shulker Box",
+            "Light Blue Shulker Box",
+            "Light Gray Shulker Box",
+            "Lime Shulker Box",
+            "Magenta Shulker Box",
+            "Orange Shulker Box",
+            "Pink Shulker Box",
+            "Purple Shulker Box",
+            "Red Shulker Box",
+            "Shulker Box",
+            "White Shulker Box",
+            "Yellow Shulker Box"
+        ]
+    },
+    {
+        "block": "Slabs",
+        "variants": [
+            "Acacia Slab",
+            "Andesite Slab",
+            "Bamboo Mosaic Slab",
+            "Bamboo Slab",
+            "Birch Slab",
+            "Blackstone Slab",
+            "Brick Slab",
+            "Cherry Slab",
+            "Cobbled Deepslate Slab",
+            "Cobblestone Slab",
+            "Crimson Slab",
+            "Cut Copper Slab",
+            "Cut Red Sandstone Slab",
+            "Cut Sandstone Slab",
+            "Dark Oak Slab",
+            "Dark Prismarine Slab",
+            "Deepslate Brick Slab",
+            "Deepslate Tile Slab",
+            "Diorite Slab",
+            "End Stone Brick Slab",
+            "Exposed Cut Copper Slab",
+            "Granite Slab",
+            "Jungle Slab",
+            "Mangrove Slab",
+            "Mossy Cobblestone Slab",
+            "Mossy Stone Brick Slab",
+            "Mud Brick Slab",
+            "Nether Brick Slab",
+            "Oak Slab",
+            "Oxidized Cut Copper Slab",
+            "Pale Oak Slab",
+            "Petrified Oak Slab",
+            "Polished Andesite Slab",
+            "Polished Blackstone Brick Slab",
+            "Polished Blackstone Slab",
+            "Polished Deepslate Slab",
+            "Polished Diorite Slab",
+            "Polished Granite Slab",
+            "Polished Tuff Slab",
+            "Prismarine Brick Slab",
+            "Prismarine Slab",
+            "Purpur Slab",
+            "Quartz Slab",
+            "Red Nether Brick Slab",
+            "Red Sandstone Slab",
+            "Resin Brick Slab",
+            "Sandstone Slab",
+            "Smooth Quartz Slab",
+            "Smooth Red Sandstone Slab",
+            "Smooth Sandstone Slab",
+            "Smooth Stone Slab",
+            "Spruce Slab",
+            "Stone Brick Slab",
+            "Stone Slab",
+            "Tuff Brick Slab",
+            "Tuff Slab",
+            "Warped Slab",
+            "Waxed Cut Copper Slab",
+            "Waxed Exposed Cut Copper Slab",
+            "Waxed Oxidized Cut Copper Slab",
+            "Waxed Weathered Cut Copper Slab",
+            "Weathered Cut Copper Slab"
+        ]
+    },
+    {
+        "block": "Slime Block",
+        "variants": "Slime Block"
+    },
+    {
+        "block": "Smithing Table",
+        "variants": "Smithing Table"
+    },
+    {
+        "block": "Smoker",
+        "variants": "Smoker"
+    },
+    {
+        "block": "Snow Block",
+        "variants": "Snow Block"
+    },
+    {
+        "block": "Soul Soil",
+        "variants": "Soul Soil"
+    },
+    {
+        "block": "Spawner",
+        "variants": "Monster Spawner"
+    },
+    {
+        "block": "Sponge",
+        "variants": [
+            "Sponge",
+            "Wet Sponge"
+        ]
+    },
+    {
+        "block": "Stems",
+        "variants": [
+            "Crimson Stem",
+            "Stripped Crimson Stem",
+            "Stripped Warped Stem",
+            "Warped Stem"
+        ]
+    },
+    {
+        "block": "Stone",
+        "variants": [
+            "Infested Stone",
+            "Smooth Stone",
+            "Stone"
+        ]
+    },
+    {
+        "block": "Stone Bricks",
+        "variants": [
+            "Chiseled Stone Bricks",
+            "Cracked Stone Bricks",
+            "Infested Chiseled Stone Bricks",
+            "Infested Cracked Stone Bricks",
+            "Infested Mossy Stone Bricks",
+            "Infested Stone Bricks",
+            "Mossy Stone Bricks",
+            "Stone Bricks"
+        ]
+    },
+    {
+        "block": "Structure Block",
+        "variants": "Structure Block"
+    },
+    {
+        "block": "Suspicious Gravel",
+        "variants": "Suspicious Gravel"
+    },
+    {
+        "block": "Suspicious Sand",
+        "variants": "Suspicious Sand"
+    },
+    {
+        "block": "Target",
+        "variants": "Target"
+    },
+    {
+        "block": "Terracotta",
+        "variants": [
+            "Black Terracotta",
+            "Blue Terracotta",
+            "Brown Terracotta",
+            "Cyan Terracotta",
+            "Gray Terracotta",
+            "Green Terracotta",
+            "Light Blue Terracotta",
+            "Light Gray Terracotta",
+            "Lime Terracotta",
+            "Magenta Terracotta",
+            "Orange Terracotta",
+            "Pink Terracotta",
+            "Purple Terracotta",
+            "Red Terracotta",
+            "Terracotta",
+            "White Terracotta",
+            "Yellow Terracotta"
+        ]
+    },
+    {
+        "block": "Trial Spawner",
+        "variants": "Trial Spawner"
+    },
+    {
+        "block": "Tuff",
+        "variants": "Tuff"
+    },
+    {
+        "block": "Tuff Bricks",
+        "variants": "Tuff Bricks"
+    },
+    {
+        "block": "Vault",
+        "variants": "Vault"
+    },
+    {
+        "block": "Wart Blocks",
+        "variants": [
+            "Nether Wart Block",
+            "Warped Wart Block"
+        ]
+    },
+    {
+        "block": "Wood",
+        "variants": [
+            "Acacia Wood",
+            "Birch Wood",
+            "Cherry Wood",
+            "Dark Oak Wood",
+            "Jungle Wood",
+            "Mangrove Wood",
+            "Oak Wood",
+            "Pale Oak Wood",
+            "Spruce Wood",
+            "Stripped Acacia Wood",
+            "Stripped Birch Wood",
+            "Stripped Cherry Wood",
+            "Stripped Dark Oak Wood",
+            "Stripped Jungle Wood",
+            "Stripped Mangrove Wood",
+            "Stripped Oak Wood",
+            "Stripped Pale Oak Wood",
+            "Stripped Spruce Wood"
+        ]
+    },
+    {
+        "block": "Wool",
+        "variants": [
+            "Black Wool",
+            "Blue Wool",
+            "Brown Wool",
+            "Cyan Wool",
+            "Gray Wool",
+            "Green Wool",
+            "Light Blue Wool",
+            "Light Gray Wool",
+            "Lime Wool",
+            "Magenta Wool",
+            "Orange Wool",
+            "Pink Wool",
+            "Purple Wool",
+            "Red Wool",
+            "White Wool",
+            "Yellow Wool"
+        ]
+    }
+]
