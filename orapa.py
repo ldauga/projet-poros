@@ -10,8 +10,9 @@ Created by Leoir.
 All rights reserved. Unauthorized distribution, modification, or commercial use is prohibited.
 """
 
+from contextlib import redirect_stdout
 from typing import Tuple
-from minescript import (player, EventQueue, EventType, player_look_at, player_orientation, player_get_targeted_block, player_press_attack, press_key_bind)
+from minescript import (player, EventQueue, EventType, player_look_at, player_orientation, player_get_targeted_block, player_press_attack, echo, flush, getblock)
 import sys
 import json
 
@@ -207,44 +208,84 @@ def distance_between_points(p1: Tuple[float, float, float], p2: Tuple[float, flo
     Returns:
         float: Distance between p1 and p2.
     """
-    return math.sqrt((p2[0] - p1[0])**2 +
+    return round(math.sqrt((p2[0] - p1[0])**2 +
                      (p2[1] - p1[1])**2 +
-                     (p2[2] - p1[2])**2)
+                     (p2[2] - p1[2])**2))
 
 # # Example usage:
 # p1 = (1, 2, 3)
 # p2 = (4, 6, 8)
-# print(distance_between_points(p1, p2))
 
 
 def break_utils(targeted_block: str):
     
     def a():
     
-        # break_value = False
-        # while block := player_get_targeted_block():
-        #     print('oui')
-        #     if break_value:
-        #         continue
-        #     if block.type != targeted_block:
-        #         if break_value:
-        #             print("breaked")
-        #             return -1
-        #         print("not good block")
-        #         return 0
-        #     print("good block")
-        #     break_value = True
-        #     player_press_attack(True)
-        press_key_bind("key.attack", True)
-        # player_press_attack(True)
-        # player_press_attack(False)
-        # print("no target block")
+        
+        player_press_attack(True)
+        player_press_attack(False)
+        flush()
         return 0
     
     return a
+
+def hold_attack_until_broken(
+    target_block_type: str,
+    target_pos_center: tuple[float, float, float],
+    max_hold_s: float = 8.0,
+    poll_every: float = 0.05,
+) -> bool:
+    
+    break_value = False
+    
+    while True:
+        tb = player_get_targeted_block(5.0)
+        
+        
+        if not tb or tb.type != target_block_type:
+            break
+        
+        player_press_attack(True)
+        time.sleep(0.1)
+        
+    player_press_attack(False)
+    flush()
+    
+    # tb = player_get_targeted_block(5.0)
+    # if not tb or (tb.position[0]+0.5, tb.position[1]+0.5, tb.position[2]+0.5) != tuple(target_pos_center):
+    #     player_look_at(*target_pos_center)
+    #     flush()
+    #     time.sleep(0.02)
+    #     tb = player_get_targeted_block(5.0)
+
+    # start = time.time()
+    # pressed = False
+    # try:
+    #     while True:
+    #         if time.time() - start > max_hold_s:
+    #             return False  # timeout
+
+    #         block = player_get_targeted_block(5.0)
+    #         if not block or block.type != target_block_type:
+    #             return True  # block changed/broken
+
+    #         if not pressed:
+    #             # Make absolutely sure no stdout leaks during this call:
+    #             with redirect_stdout(sys.stderr):  # or redirect to _sink
+    #                 player_press_attack(True)
+    #             flush()
+    #             pressed = True
+
+    #         time.sleep(poll_every)
+    # finally:
+    #     if pressed:
+    #         with redirect_stdout(sys.stderr):
+    #             player_press_attack(False)
+    #         # flush()  # optional
+
     
 
-def smooth_look_at(pos_to_look_at: Tuple[int, int, int], call_by_step = None):
+def smooth_look_at(pos_to_look_at: Tuple[int, int, int]):
     
     
     
@@ -254,50 +295,42 @@ def smooth_look_at(pos_to_look_at: Tuple[int, int, int], call_by_step = None):
     
     camera_pos = player().position
     camera_pos[1] += 1
-    # print(camera_pos)
     distance_with_player = distance_between_points(camera_pos, pos_to_look_at)
     actual_looking_pos = ray_end_position(camera_pos, player_orientation(), distance_with_player)
     distance_between_looking_point = distance_between_points(actual_looking_pos, pos_to_look_at)
     MAX_STEP = max((int(distance_between_looking_point)) ** 3, 10)
-    print("MAX_STEP", MAX_STEP)
     difference = diff_between_points(actual_looking_pos, pos_to_look_at)
     
     
     # initial
     
-    # print(actual_looking_pos)
-    
-    # print(distance_with_player)
-    
-    print(difference)
     
     last_looking_pos = actual_looking_pos
     
     for i in range(MAX_STEP):
-        frac =  ((i + 1) * 100 / MAX_STEP) / 100
-        
-        
-        
-        last_looking_pos = [
-            last_looking_pos[0] + (difference[0] / MAX_STEP),
-            last_looking_pos[1] + (difference[1] / MAX_STEP),
-            last_looking_pos[2] + (difference[2] / MAX_STEP),
+        frac = (i + 1) / MAX_STEP  # plus simple
+        actual_looking_pos = ray_end_position(camera_pos, player_orientation(), distance_with_player)
+        difference = diff_between_points(actual_looking_pos, pos_to_look_at)
+
+        # Pas théorique pour arriver exactement à la cible
+        step = [d / (MAX_STEP - i) for d in difference]
+
+        # Ajout de random qui se réduit en fin de parcours
+        noise_strength = (1 - frac) ** 2
+        step_with_noise = [
+            step[0] + (random.uniform(-0.05, 0.05) * noise_strength),
+            step[1] + (random.uniform(-0.05, 0.05) * noise_strength),
+            step[2] + (random.uniform(-0.05, 0.05) * noise_strength),
         ]
-        
-        # difference = diff_between_points(actual_looking_pos, pos_to_look_at)
+
+        last_looking_pos = [
+            last_looking_pos[0] + step_with_noise[0],
+            last_looking_pos[1] + step_with_noise[1],
+            last_looking_pos[2] + step_with_noise[2],
+        ]
+
         player_look_at(*last_looking_pos)
-        
-        
-        if call_by_step:
-            call_by_step()
-        
-        
-        
-        
-        time.sleep(.01)
-        
-    
-    
+        time.sleep(0.01 + random.uniform(0, 0.01))
     
     
     
@@ -342,14 +375,15 @@ def main(tracked_block: str):
                 elif event.action == 1: # down
                     if event.key == STOP_KEY:
                         return
-                    if event.key == 265:
-                        smooth_look_at((6.5, -58.5, 6.5))
+                    # if event.key == 265:
+                    #     smooth_look_at((6.5, -58.5, 6.5))
                 else: # repeat
                     pass
             
             if event.type == EventType.BLOCK_UPDATE:
             
-                if event.new_state == tracked_block:
+                if event.new_state == tracked_block and getblock(*event.position) == tracked_block:
+                    
                     player_position = player().position
                     player_position[1] += 1
                     
@@ -364,21 +398,23 @@ def main(tracked_block: str):
                     
                     # if is_in_box(event.position, min_pos, max_pos):
                         
-                    #     print(f"new block spawned in the radius : {event.new_state}")
-                        smooth_look_at(target, break_utils(tracked_block))
+                        print(f"new block spawned in the radius : {event.new_state}")
+                        smooth_look_at(target)
+                        
+                        ok = hold_attack_until_broken(tracked_block, target)
 
                 
 with open(sys.path[0] + '/blocklist.json') as f:
     data = json.load(f)
     if len(sys.argv) < 2:
-        print("Usage: \\orapa <block_type>")
+        echo("Usage: \\orapa <block_type>")
     else:
         input_arg = " ".join(sys.argv[1:])
         direct_match, match = find_closest_variant(normalize_input(input_arg), data)
 
         if not direct_match:
-            print(f"{sys.argv[1]} is not a valid block{' closest match is ' + match if match else ''}")
+            echo(f"{sys.argv[1]} is not a valid block{' closest match is ' + match if match else ''}")
         else:
             match = "minecraft:" + "_".join((word.lower() for word in match.split()))
-            print(f"Orapa is stating wating for {match}")
+            echo(f"Orapa is stating wating for {match}")
             main(match)
