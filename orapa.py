@@ -1,4 +1,4 @@
-r"""Orapa v0.2 — distributed via Leoir
+r"""Orapa v1.0 — distributed via Leoir
 
 Usage:
     \orapa BLOCK_TYPE
@@ -7,154 +7,23 @@ Mimics human-like mining behavior to break the specified block,
 helping bypass basic anti-cheat detection.
 
 Created by Leoir.
-All rights reserved. Unauthorized distribution, modification, or commercial use is prohibited.
+All rights reserved. Unauthorized distribution, modification, or commercial use is prohibited. For educational purpose only.
 """
 
+
+
+
 from contextlib import redirect_stdout
+import difflib
+import math
+import random
+import threading
+import time
 from typing import Tuple
-from minescript import (player, EventQueue, EventType, player_look_at, player_orientation, player_get_targeted_block, player_press_attack, echo, flush, getblock)
+from minescript import (player, EventQueue, EventType, player_look_at, player_orientation, player_get_targeted_block, player_press_attack, echo, flush, getblock, player_set_orientation)
 import sys
 import json
 
-STOP_KEY = 259 # BACKSPACE
-
-def diff_between_points(p1: Tuple[float, float, float], p2: Tuple[float, float, float]) -> Tuple[float, float, float]:
-    """
-    Return the difference (dx, dy, dz) between two 3D points.
-    
-    Args:
-        p1 (tuple): First point as (x, y, z).
-        p2 (tuple): Second point as (x, y, z).
-        
-    Returns:
-        tuple: (dx, dy, dz) where each is p2 - p1.
-    """
-    dx = p2[0] - p1[0]
-    dy = p2[1] - p1[1]
-    dz = p2[2] - p1[2]
-    return dx, dy, dz
-
-def is_in_box(pos: Tuple[float, float, float],
-              min_pos: Tuple[float, float, float],
-              max_pos: Tuple[float, float, float]) -> bool:
-    """
-    Check if a 3D point is inside (or on the edge of) a box defined by min and max coordinates.
-
-    Args:
-        pos (Tuple[float, float, float]): position of the point to check.
-        min_pos (Tuple[float, float, float]): position of the minimum corner of the box.
-        max_pos (Tuple[float, float, float]): position of the maximum corner of the box.
-    Returns:
-        True if the point is inside or on the box edges, False otherwise.
-    """
-    return (
-        min_pos[0] <= pos[0] <= max_pos[0] and
-        min_pos[1] <= pos[1] <= max_pos[1] and
-        min_pos[2] <= pos[2] <= max_pos[2]
-    )
-
-
-def block_bounds_from_center(center: Tuple[float, float, float], size: Tuple[int, int, int]):
-    """
-    Return the bounding corner of a rectangle of <size> centered in <center>
-
-    Args:
-        center (Tuple[float, float, float]): center of the square
-        size (Tuple[int, int, int]): size of the final square
-
-    Returns:
-        Tuple[Tuple[int, int, int], Tuple[int, int, int]]: bounding corner position
-    """
-    x, y, z = center
-    sx, sy, sz = size
-    min_pos = (int(x - (sx - 1) / 2), int(y - (sy - 1) / 2), int(z - (sz - 1) / 2))
-    max_pos = (int(x + (sx - 1) / 2), int(y + (sy - 1) / 2), int(z + (sz - 1) / 2))
-    return min_pos, max_pos
-
-import math
-import random
-import time
-from typing import Tuple
-
-# If you already define BASE_DELAY elsewhere, remove this line.
-BASE_DELAY = 0.015  # seconds between micro-steps
-
-
-import difflib
-import math
-
-import math
-from typing import Tuple, Optional
-
-def point_in_fov(
-    start: Tuple[float, float, float],
-    orientation: Tuple[float, float],
-    point: Tuple[float, float, float],
-    fov_deg: float,
-    max_distance: Optional[float] = None,
-    yaw_offset: float = 90.0,
-    pitch_offset: float = -10.0,
-) -> bool:
-    """
-    Check if `point` lies inside the player's field of view (3D cone).
-
-    Parameters
-    ----------
-    start : (x, y, z)
-        Player position.
-    orientation : (yaw, pitch)
-        Same conventions as your ray:
-        - yaw around Z (horizontal), in degrees.
-        - pitch around Y (vertical), in degrees.
-        Offsets (yaw_offset=+90, pitch_offset=-10) mirror your ray computation.
-    point : (x, y, z)
-        Target point to test.
-    fov_deg : float
-        Full cone angle in degrees (e.g., 90 => half-angle is 45).
-    max_distance : float | None
-        If provided, the point must also be within this distance.
-    yaw_offset, pitch_offset : float
-        Offsets to keep behavior consistent with your ray_end_position.
-
-    Returns
-    -------
-    bool
-        True if the point is inside the FOV cone (and distance, if given).
-    """
-    px, py, pz = start
-    tx, ty, tz = point
-
-    # Forward (unit) vector from orientation, matching your ray math
-    yaw_rad = math.radians(orientation[0] + yaw_offset)
-    pitch_rad = math.radians(orientation[1] + pitch_offset)
-
-    fx = math.cos(pitch_rad) * math.cos(yaw_rad)
-    fy = -math.sin(pitch_rad)
-    fz = math.cos(pitch_rad) * math.sin(yaw_rad)
-
-    # Vector from player to target
-    vx = tx - px
-    vy = ty - py
-    vz = tz - pz
-
-    # Distance & normalization
-    dist = math.sqrt(vx*vx + vy*vy + vz*vz)
-    if dist == 0.0:
-        return True  # same position -> trivially "in FOV"
-    if max_distance is not None and dist > max_distance:
-        return False
-
-    inv_dist = 1.0 / dist
-    ux, uy, uz = vx * inv_dist, vy * inv_dist, vz * inv_dist
-
-    # Angle between forward and target
-    dot = fx*ux + fy*uy + fz*uz
-    # Clamp for numerical stability
-    dot = max(-1.0, min(1.0, dot))
-
-    half_fov_rad = math.radians(fov_deg * 0.5)
-    # Equivalent check without acos (faster): dot >= cos(half_fov)
-    return dot >= math.cos(half_fov_rad)
 
 
 def ray_end_position(
@@ -212,131 +81,59 @@ def distance_between_points(p1: Tuple[float, float, float], p2: Tuple[float, flo
                      (p2[1] - p1[1])**2 +
                      (p2[2] - p1[2])**2))
 
-# # Example usage:
-# p1 = (1, 2, 3)
-# p2 = (4, 6, 8)
 
 
-def break_utils(targeted_block: str):
+def look_at_subject(start_pos, end_pos, orientation, steps=30, curve_strength=0.2):
+    """
+    Smoothly rotate the camera from start_pos to end_pos to face the subject.
     
-    def a():
-    
-        
-        player_press_attack(True)
-        player_press_attack(False)
-        flush()
-        return 0
-    
-    return a
+    start_pos: (x, y, z) tuple of player starting position
+    end_pos:   (x, y, z) tuple of subject/target position
+    steps:     number of interpolation steps
+    curve_strength: strength of curve applied to movement
+    """
 
-def hold_attack_until_broken(
-    target_block_type: str,
-    target_pos_center: tuple[float, float, float],
-    max_hold_s: float = 8.0,
-    poll_every: float = 0.05,
-) -> bool:
-    
-    break_value = False
-    
-    while True:
-        tb = player_get_targeted_block(5.0)
-        
-        
-        if not tb or tb.type != target_block_type:
-            break
-        
-        player_press_attack(True)
-        time.sleep(0.1)
-        
-    player_press_attack(False)
-    flush()
-    
-    # tb = player_get_targeted_block(5.0)
-    # if not tb or (tb.position[0]+0.5, tb.position[1]+0.5, tb.position[2]+0.5) != tuple(target_pos_center):
-    #     player_look_at(*target_pos_center)
-    #     flush()
-    #     time.sleep(0.02)
-    #     tb = player_get_targeted_block(5.0)
+    # Compute yaw and pitch required to face target
+    dx = end_pos[0] - start_pos[0]
+    dy = end_pos[1] - start_pos[1]
+    dz = end_pos[2] - start_pos[2]
 
-    # start = time.time()
-    # pressed = False
-    # try:
-    #     while True:
-    #         if time.time() - start > max_hold_s:
-    #             return False  # timeout
+    target_yaw = math.degrees(math.atan2(-dx, dz))
+    dist_xz = math.sqrt(dx*dx + dz*dz)
+    target_pitch = -math.degrees(math.atan2(dy, dist_xz))
 
-    #         block = player_get_targeted_block(5.0)
-    #         if not block or block.type != target_block_type:
-    #             return True  # block changed/broken
+    # Starting orientation (could be dynamic; here assume forward = yaw=0, pitch=0)
+    yaw, pitch = orientation
 
-    #         if not pressed:
-    #             # Make absolutely sure no stdout leaks during this call:
-    #             with redirect_stdout(sys.stderr):  # or redirect to _sink
-    #                 player_press_attack(True)
-    #             flush()
-    #             pressed = True
+    # Deltas
+    delta_y = target_yaw - yaw
+    delta_p = target_pitch - pitch
 
-    #         time.sleep(poll_every)
-    # finally:
-    #     if pressed:
-    #         with redirect_stdout(sys.stderr):
-    #             player_press_attack(False)
-    #         # flush()  # optional
+    # Perpendicular offsets for smooth curve
+    perp_yaw = -delta_p * 0.1
+    perp_pitch = delta_y * 0.1
 
-    
+    BASE_DELAY = 0.02  # base time between steps
 
-def smooth_look_at(pos_to_look_at: Tuple[int, int, int]):
-    
-    
-    
-    
-    
-    
-    
-    camera_pos = player().position
-    camera_pos[1] += 1
-    distance_with_player = distance_between_points(camera_pos, pos_to_look_at)
-    actual_looking_pos = ray_end_position(camera_pos, player_orientation(), distance_with_player)
-    distance_between_looking_point = distance_between_points(actual_looking_pos, pos_to_look_at)
-    MAX_STEP = max((int(distance_between_looking_point)) ** 3, 10)
-    difference = diff_between_points(actual_looking_pos, pos_to_look_at)
-    
-    
-    # initial
-    
-    
-    last_looking_pos = actual_looking_pos
-    
-    for i in range(MAX_STEP):
-        frac = (i + 1) / MAX_STEP  # plus simple
-        actual_looking_pos = ray_end_position(camera_pos, player_orientation(), distance_with_player)
-        difference = diff_between_points(actual_looking_pos, pos_to_look_at)
+    for i in range(1, steps + 1):
+        frac = i / steps
+        base_yaw = yaw + delta_y * frac
+        base_pitch = pitch + delta_p * frac
 
-        # Pas théorique pour arriver exactement à la cible
-        step = [d / (MAX_STEP - i) for d in difference]
+        curve_factor = math.sin(math.pi * frac) * curve_strength
+        curve_yaw = perp_yaw * curve_factor
+        curve_pitch = perp_pitch * curve_factor
 
-        # Ajout de random qui se réduit en fin de parcours
-        noise_strength = (1 - frac) ** 2
-        step_with_noise = [
-            step[0] + (random.uniform(-0.05, 0.05) * noise_strength),
-            step[1] + (random.uniform(-0.05, 0.05) * noise_strength),
-            step[2] + (random.uniform(-0.05, 0.05) * noise_strength),
-        ]
+        jitter_yaw = random.uniform(-0.12, 0.12)
+        jitter_pitch = random.uniform(-0.12, 0.12)
 
-        last_looking_pos = [
-            last_looking_pos[0] + step_with_noise[0],
-            last_looking_pos[1] + step_with_noise[1],
-            last_looking_pos[2] + step_with_noise[2],
-        ]
+        next_y = base_yaw + curve_yaw + jitter_yaw
+        next_p = base_pitch + curve_pitch + jitter_pitch
 
-        player_look_at(*last_looking_pos)
-        time.sleep(0.01 + random.uniform(0, 0.01))
+        player_set_orientation(next_y, next_p)
+        time.sleep(BASE_DELAY + random.uniform(-0.001, 0.001))
+    player_set_orientation(target_yaw, target_pitch)
     
-    
-    
-    # player_look_at
-
-
 
 def normalize_input(name: str) -> str:
     """Normalize Minecraft-style names into a consistent, comparable format."""
@@ -361,60 +158,126 @@ def find_closest_variant(query: str, blocks: list, cutoff: float = 0.6) -> str |
                 return False, v
 
     return False, None
+    
+def main(stop_event):
+    with open(sys.path[0] + '/blocklist.json') as f:
+        data = json.load(f)
+        if len(sys.argv) < 2:
+            echo("Usage: \\orapa <block_type>")
+        else:
+            input_arg = " ".join(sys.argv[1:])
+            direct_match, match = find_closest_variant(normalize_input(input_arg), data)
 
-def main(tracked_block: str):
+            if not direct_match:
+                echo(f"{sys.argv[1]} is not a valid block{' closest match is ' + match if match else ''}")
+            else:
+                match = "minecraft:" + "_".join((word.lower() for word in match.split()))
+                echo(f"Orapa is stating wating for {match}")
+                
+                try:
+                    player_press_attack(True)
+                
+                    while True:
+                        # time.sleep(0.8)
+                    # main(match)
+            
+                        block_list = [
+                            (-182 + .5, 121.5, -12),
+                            (-183 + .5, 121.5, -12),
+                            (-184 + .5, 121.5, -12),
 
+                            (-184 + .5, 122.5, -12),
+                            (-185 + .5, 122.5, -12),
+
+                            (-185 + .5, 121.5, -13),
+                            (-186 + .5, 121.5, -13),
+                            (-186 + .5, 122.5, -13),
+                            (-187 + .5, 122.5, -13),
+                            (-187 + .5, 121.5, -13),
+                            (-188 + .5, 121.5, -13),
+                            (-189 + .5, 121.5, -13),
+                            (-189 + .5, 120.5, -13),
+                            (-188 + .5, 120.5, -13),
+                            (-187 + .5, 120.5, -13),
+                            (-186 + .5, 120.5, -13),
+                            (-185 + .5, 120.5, -13),
+                            (-184 + .5, 120.5, -13),
+                            (-185 + .5, 119.5, -14 + .5),
+                            (-187 + .5, 119.5, -13),
+                            (-188 + .5, 119.5, -13),
+                        ]
+
+                        pos = player().position
+                        pos[1] += 1.5
+
+                        for block in block_list:
+                            orientation = player_orientation()
+                            look_at_subject(pos, block, orientation, steps=10, curve_strength=1)
+                            
+                            while player_get_targeted_block().type == match:
+                                if stop_event.is_set():
+                                    return
+                                time.sleep(0.01)
+                            time.sleep(0.1)
+                        
+                        
+                        orientation = player_orientation()
+                        
+                        look_at_subject(pos, (-187 + .5, 121.5, -13), orientation, steps=10, curve_strength=1)
+                        
+                        time.sleep(0.2)
+                        
+                        orientation = player_orientation()
+                        
+                        
+                        
+                        look_at_subject(pos, (-185 + .5, 121.5, -13), orientation, steps=10, curve_strength=1)
+                        time.sleep(0.2)
+                finally:
+                    player_press_attack(False)
+                    
+                    
+
+STOP_KEY = 333
+
+def kill_process(stop_event: threading.Event):
     with EventQueue() as event_queue:
         event_queue.register_key_listener()
-        event_queue.register_block_update_listener()
-        while True:
+        while not stop_event.is_set():
             event = event_queue.get()
-            if event.type == EventType.KEY:
-                if event.action == 0: # up
-                    pass
-                elif event.action == 1: # down
-                    if event.key == STOP_KEY:
-                        return
-                    # if event.key == 265:
-                    #     smooth_look_at((6.5, -58.5, 6.5))
-                else: # repeat
-                    pass
-            
-            if event.type == EventType.BLOCK_UPDATE:
-            
-                if event.new_state == tracked_block and getblock(*event.position) == tracked_block:
-                    
-                    player_position = player().position
-                    player_position[1] += 1
-                    
-                    target = event.position
-                    target[0] += .5
-                    target[1] += .5
-                    target[2] += .5
-                    if point_in_fov(player_position, player_orientation(), target, 135, 4.5):
-                    
-                    # min_pos, max_pos = block_bounds_from_center(player_position, (10, 5, 10))
-                    
-                    
-                    # if is_in_box(event.position, min_pos, max_pos):
-                        
-                        print(f"new block spawned in the radius : {event.new_state}")
-                        smooth_look_at(target)
-                        
-                        ok = hold_attack_until_broken(tracked_block, target)
-
+            if event.type == EventType.KEY and event.action == 1:  # key down
+                if event.key == STOP_KEY:
+                    stop_event.set()
+                    break
                 
-with open(sys.path[0] + '/blocklist.json') as f:
-    data = json.load(f)
-    if len(sys.argv) < 2:
-        echo("Usage: \\orapa <block_type>")
-    else:
-        input_arg = " ".join(sys.argv[1:])
-        direct_match, match = find_closest_variant(normalize_input(input_arg), data)
+# def avast(stop_event: threading.Event):
+    
+    
+#     last_pos = player().position
+#     while True:
+#         pos = player().position
+        
+        
+#         if distance_between_points(pos, last_pos) > 5:
+        
+        
+        
+    
+                            
 
-        if not direct_match:
-            echo(f"{sys.argv[1]} is not a valid block{' closest match is ' + match if match else ''}")
-        else:
-            match = "minecraft:" + "_".join((word.lower() for word in match.split()))
-            echo(f"Orapa is stating wating for {match}")
-            main(match)
+
+if __name__ == "__main__":
+    stop_event = threading.Event()
+
+    t1 = threading.Thread(target=kill_process, args=(stop_event,), daemon=True)
+    t2 = threading.Thread(target=main, args=(stop_event,), daemon=True)
+    # t3 = threading.Thread(target=avast, args=(stop_event,), daemon=True)
+
+    t1.start()
+    t2.start()
+    # t3.start()
+
+    # Optionally wait for threads to finish
+    t1.join()
+    t2.join()
+    # t3.join()
