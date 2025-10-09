@@ -58,14 +58,11 @@ def main(stop_event: threading.Event):
         
         yaw, pitch = player_orientation()
         pos = player_position()
-        # print(distance_between_points(last_pos, player_position()))
-        
-        
-        
-        
         
         if distance_between_points(last_pos, player_position()) > 2:
             check = True
+            
+            sleep(0.75)
             
             pyautogui.press("F7")
             
@@ -75,10 +72,6 @@ def main(stop_event: threading.Event):
             winsound.Beep(800, 100)
             
         last_pos = player_position()
-            
-            
-        # if abs(last_yaw - yaw) > 0:
-        #     print("AVAST DETECTED")
             
             
         sleep(.01)
