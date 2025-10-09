@@ -1,6 +1,7 @@
 from contextlib import redirect_stdout
 import difflib
 import math
+import os
 import random
 import threading
 import time
@@ -16,17 +17,15 @@ STOP_KEY = 333
 
 def kill_process(stop_event: threading.Event):
     with EventQueue() as event_queue:
-        event_queue.register_key_listener()
-        # event_queue.register_mouse_listener()
+        # event_queue.register_key_listener()
+        event_queue.register_mouse_listener()
         while not stop_event.is_set():
             event = event_queue.get()
-            # if event.type == EventType.MOUSE and event.action and not event.button :
-            #     stop_event.set()
-            #     break
-            if event.type == EventType.KEY and event.action == 1:  # key down
-                if event.key == STOP_KEY:
-                    stop_event.set()
-                    break
+            if event.type == EventType.MOUSE and event.action and not event.button :
+                stop_event.set()
+                break
+            # if event.type == EventType.KEY and event.action == 1:  # key down
+            #     if event.key == STOP_KEY:
 
 
 def point_in_direction(start_pos, orientation, length):
@@ -60,21 +59,20 @@ def main(stop_event):
     positions = []
     
     try:
-        # player_press_forward(True)
+        player_press_forward(True)
         while not stop_event.is_set():
             pos = player().position
             pos[1]+=1.5
             orientation = player_orientation()
-            ray_end_pos = point_in_direction(pos, orientation, 1)
-            print(ray_end_pos)
+            ray_end_pos = point_in_direction(pos, orientation, 3)
+            positions.append(ray_end_pos)
             # f.write(f"({ray_end_pos[0]}, {ray_end_pos[1]}, {ray_end_pos[2]})\n")
             time.sleep(.2)
     finally:
         player_press_forward(False)
-        # with open(sys.path[0] + "/eden.path", "r+") as f:
-        #     f.seek(0)
-        #     f.write("\n".join([f'({pos[0]}, {pos[1]}, {pos[2]})' for pos in positions]))
-        
+    path = os.path.join(sys.path[0], "eden.path")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write("\n".join("({:.6f}, {:.6f}, {:.6f})".format(*pos) for pos in positions) + "\n")        
         
             
         

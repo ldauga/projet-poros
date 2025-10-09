@@ -4,6 +4,13 @@ import time
 
 STOP_KEY = 259 # BACKSPACE
 
+
+
+condes_items = [
+    "minecraft:wheat",
+    "minecraft:coal",
+]
+
 def main():
     
     next_goal = 4
@@ -23,7 +30,7 @@ def main():
                 inv = player_inventory()
                 
                 
-                if sum([item.count for item in inv if item.item == "minecraft:wheat"]) >= next_goal:
+                if sum([item.count for item in inv if item.item in condes_items ]) >= next_goal:
                     next_goal = random.randint(128, 384)
                     execute("/condense")
                     time.sleep(0.3)
