@@ -1,11 +1,17 @@
 
 
+import math
 import threading
+from time import sleep
+from typing import Tuple
+import winsound
 
-from auto import STOP_KEY
-from system.lib.minescript import EventQueue, EventType
+import pyautogui
+
+from system.lib.minescript import EventQueue, EventType, player, player_orientation, player_position
 
 
+STOP_KEY = 333
 
 def kill_process(stop_event: threading.Event):
     with EventQueue() as event_queue:
@@ -19,8 +25,69 @@ def kill_process(stop_event: threading.Event):
                     break
 
 
+def distance_between_points(p1: Tuple[float, float, float], p2: Tuple[float, float, float]) -> float:
+    """
+    Calculate the Euclidean distance between two 3D points.
+    
+    Args:
+        p1 (tuple): First point as (x, y, z).
+        p2 (tuple): Second point as (x, y, z).
+        
+    Returns:
+        float: Distance between p1 and p2.
+    """
+    return abs(math.sqrt((p2[0] - p1[0])**2 +
+                     (p2[1] - p1[1])**2 +
+                     (p2[2] - p1[2])**2))
+
+
+def main(stop_event: threading.Event):
+
+    check = False 
+    
+    last_pos = player_position()
+    last_yaw, last_pitch = player_orientation()
+    
+    
+    while not stop_event.is_set():
+        
+        if check:
+            winsound.Beep(800, 100)
+            print("VERIF EN COURS")
+        
+        
+        yaw, pitch = player_orientation()
+        pos = player_position()
+        # print(distance_between_points(last_pos, player_position()))
+        
+        
+        
+        
+        
+        if distance_between_points(last_pos, player_position()) > 2:
+            check = True
+            
+            pyautogui.press("F7")
+            
+            
+            
+            
+            winsound.Beep(800, 100)
+            
+        last_pos = player_position()
+            
+            
+        # if abs(last_yaw - yaw) > 0:
+        #     print("AVAST DETECTED")
+            
+            
+        sleep(.01)
+        
+
+
+
 if __name__ == "__main__":
-    print("Balise running")
+    print("AVAST running")
     stop_event = threading.Event()
     prestige_to_pass = [False]
 
