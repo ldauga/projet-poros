@@ -62,7 +62,7 @@ def main(stop_event: threading.Event):
         if distance_between_points(last_pos, player_position()) > 2:
             check = True
             
-            sleep(0.75)
+            sleep(1)
             
             pyautogui.press("F7")
             
