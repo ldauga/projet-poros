@@ -199,15 +199,15 @@ def main(stop_event: threading.Event):
             
             winsound.Beep(2000, 50)
         
-        if abs(last_yaw - yaw) > 90:
-            print("activated by rotation")
-            check = True
+        # if abs(last_yaw - yaw) > 90:
+        #     print("activated by rotation")
+        #     check = True
             
-            sleep(1)
+        #     sleep(1)
             
-            pyautogui.press("F7")
+        #     pyautogui.press("F7")
             
-            winsound.Beep(2000, 50)
+        #     winsound.Beep(2000, 50)
         
         if tool is None or tool.slot != last_tool.slot or tool.selected != last_tool.selected:
             print("activated by tool")
