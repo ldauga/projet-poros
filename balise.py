@@ -69,7 +69,7 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass):
                         prestige_to_pass[0] = True
                 elif f"{player_name.lower()} vient de passer prestige" in msg:
                     
-                    print(f"Prochain niveau requis pour prestige: {INITIAL_PRESTIGE + 10 * prestige_level}.")
+                    print(f"Prochain niveau requis pour prestige: {INITIAL_PRESTIGE + 10 * (prestige_level + 1)}.")
                     
                     prestige_to_pass[0] = False
 
