@@ -8,7 +8,7 @@ import winsound
 
 import pyautogui
 
-from system.lib.minescript import EventQueue, EventType, player, player_orientation, player_position
+from system.lib.minescript import EventQueue, EventType, player, player_inventory, player_orientation, player_position
 
 
 STOP_KEY = 333
@@ -40,6 +40,10 @@ def distance_between_points(p1: Tuple[float, float, float], p2: Tuple[float, flo
                      (p2[1] - p1[1])**2 +
                      (p2[2] - p1[2])**2))
 
+POSSIBLE_TOOL = [
+    "minecraft:diamond_hoe",
+    "minecraft:diamond_pickaxe",
+]
 
 def main(stop_event: threading.Event):
 
@@ -47,34 +51,63 @@ def main(stop_event: threading.Event):
     
     last_pos = player_position()
     last_yaw, last_pitch = player_orientation()
-    
+    last_tool = next(
+        (item for item in player_inventory() if item.item in POSSIBLE_TOOL),
+        None,
+    )
     
     while not stop_event.is_set():
         
         if check:
-            winsound.Beep(800, 100)
+            winsound.Beep(2000, 50)
             print("VERIF EN COURS")
         
         
         yaw, pitch = player_orientation()
         pos = player_position()
+        tool = next(
+            (item for item in player_inventory() if item.item in POSSIBLE_TOOL),
+            None,
+        )
         
-        if distance_between_points(last_pos, player_position()) > 2:
+        if distance_between_points(last_pos, player_position()) > 4:
             check = True
             
             sleep(1)
             
             pyautogui.press("F7")
             
+            winsound.Beep(2000, 50)
+        
+        if abs(last_yaw - yaw) > 90:
+            check = True
             
+            sleep(1)
             
+            pyautogui.press("F7")
             
-            winsound.Beep(800, 100)
+            winsound.Beep(2000, 50)
+        
+        if tool is None or tool.slot != last_tool.slot or tool.selected != last_tool.selected:
+            check = True
             
+            sleep(1)
+            
+            pyautogui.press("F7")
+            
+            winsound.Beep(2000, 50)
+        
+        
+        
+        
+        
         last_pos = player_position()
+        last_yaw = yaw
+        last_pitch = pitch
+        
             
             
-        sleep(.01)
+        sleep(.001)
         
 
 
