@@ -1,5 +1,6 @@
 import json
 import sys
+import threading
 import time
 from system.lib.minescript import EventQueue, EventType, container_get_items, execute, player_inventory, player_inventory_slot_to_hotbar, player_look_at
 import pyautogui
@@ -34,8 +35,20 @@ SLOTS = {
     8: {"x": 1150, "y": 800},
 }
 
+def kill_process(stop_event: threading.Event):
+    with EventQueue() as event_queue:
+        event_queue.register_key_listener()
+        while not stop_event.is_set():
+            event = event_queue.get()
+            if event.type == EventType.KEY and event.action == 1:  # key down
+                if event.key == STOP_KEY:
+                    stop_event.set()
+                    break
+                
+
+
         
-def main():
+def main(stop_event: threading.Event):
     
     
     if len(sys.argv) < 2:
@@ -61,64 +74,92 @@ def main():
     
     parchemins = [1]
     
+    try:
+        while not stop_event.is_set() and len(parchemins):
 
-    while len(parchemins):
+            player_look_at(*NONE_BLOCK)
 
-        player_look_at(*NONE_BLOCK)
+            execute("/c")
 
-        execute("/c")
+            time.sleep(0.3)
+            
+            if stop_event.is_set():
+                return
 
-        time.sleep(0.3)
+            pyautogui.moveTo(*parchemin_pos)
+            for _ in range(8):
+                pyautogui.click()
+                time.sleep(0.1)
+                if stop_event.is_set():
+                    return
 
-        pyautogui.moveTo(*parchemin_pos)
-        for _ in range(8):
-            pyautogui.click()
-            time.sleep(0.1)
+            pyautogui.press("Escape")
 
-        pyautogui.press("Escape")
+            for i in range(1, 10):
+                pyautogui.press(str(i))
+                pyautogui.click(button="secondary", duration=0.1)
 
-        for i in range(1, 10):
-            pyautogui.press(str(i))
+            inv = player_inventory()
+            
+            parchemins = [item for item in inv if ("Challenge" in json.dumps(item.__dict__))]
+            
+            player_look_at(*CHEST_MINERAIS)
             pyautogui.click(button="secondary")
+            
+            pyautogui.keyDown('shift')
+            
+            for item in parchemins:
+                if "minerais" in json.dumps(item.__dict__):
+                    pyautogui.moveTo(**SLOTS[item.slot], duration=0)
+                    pyautogui.click(duration=0)
+                    
+                    if stop_event.is_set():
+                        return
 
-        inv = player_inventory()
-        
-        parchemins = [item for item in inv if ("Challenge" in json.dumps(item.__dict__))]
-        
-        player_look_at(*CHEST_MINERAIS)
-        pyautogui.click(button="secondary")
-        
-        for item in parchemins:
-            if "minerais" in json.dumps(item.__dict__):
-                pyautogui.keyDown('shift')
-                
-                pyautogui.moveTo(**SLOTS[item.slot])
-                
-                pyautogui.click()
+            
+            pyautogui.keyUp('shift')
+            pyautogui.press("Escape")
+            
+            player_look_at(*CHEST_CULTURES)
 
-                pyautogui.keyUp('shift')
-        
-        pyautogui.press("Escape")
-        
-        player_look_at(*CHEST_CULTURES)
+            pyautogui.click(button="secondary")
+            
+            pyautogui.keyDown('shift')
+            
+            for item in parchemins:
+                if "cultures" in json.dumps(item.__dict__):
+                    
+                    pyautogui.moveTo(**SLOTS[item.slot], duration=0)
+                    pyautogui.click(duration=0)
+                    if stop_event.is_set():
+                        return
 
-        pyautogui.click(button="secondary")
-        
-        for item in parchemins:
-            if "cultures" in json.dumps(item.__dict__):
-                pyautogui.keyDown('shift')
-                
-                pyautogui.moveTo(**SLOTS[item.slot])
-                
-                pyautogui.click()
+            pyautogui.keyUp('shift')
 
-                pyautogui.keyUp('shift')
+            pyautogui.press("Escape")
 
-        pyautogui.press("Escape")
+            
+            
+            if len(parchemins) < 8:
+                return
+    finally:
+        pyautogui.keyUp('shift')
 
-        
-        
-        if len(parchemins) < 8:
-            return
 
-main()
+
+
+if __name__ == "__main__":
+    stop_event = threading.Event()
+
+    t1 = threading.Thread(target=kill_process, args=(stop_event,), daemon=True)
+    t2 = threading.Thread(target=main, args=(stop_event,), daemon=True)
+    # t3 = threading.Thread(target=avast, args=(stop_event,), daemon=True)
+
+    t1.start()
+    t2.start()
+    # t3.start()
+
+    # Optionally wait for threads to finish
+    t1.join()
+    t2.join()
+    # t3.join()

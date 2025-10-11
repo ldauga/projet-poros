@@ -9,6 +9,7 @@ STOP_KEY = 259 # BACKSPACE
 condes_items = [
     "minecraft:wheat",
     "minecraft:coal",
+    "minecraft:raw_copper",
 ]
 
 def main():
