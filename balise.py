@@ -105,7 +105,7 @@ def input_process(stop_event: threading.Event, prestige_to_pass, tell_prestige):
             if ev and ev.type == EventType.KEY and ev.action == 1:
                 if ev.key == PRESTIGE_SOUND_STOPPER_KEY:
                     tool = next((item for item in player_inventory() if item.item in POSSIBLE_TOOL), None)
-                    if tool and prestige_to_pass[tool.item]:
+                    if tool and prestige_to_pass[0] == tool.item:
                         tell_prestige[tool.item] = False
                         print(f"You disabled the prestige for the {tool.item}")
 
