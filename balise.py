@@ -97,7 +97,7 @@ def main(stop_event: threading.Event):
     print("Balise Stopped")
 
 
-def input_process(stop_event: threading.Event, tell_prestige):
+def input_process(stop_event: threading.Event, prestige_to_pass, tell_prestige):
     with EventQueue() as event_queue:
         event_queue.register_key_listener()
         while not stop_event.is_set():
@@ -105,7 +105,7 @@ def input_process(stop_event: threading.Event, tell_prestige):
             if ev and ev.type == EventType.KEY and ev.action == 1:
                 if ev.key == PRESTIGE_SOUND_STOPPER_KEY:
                     tool = next((item for item in player_inventory() if item.item in POSSIBLE_TOOL), None)
-                    if tool:
+                    if tool and prestige_to_pass[tool.item]:
                         tell_prestige[tool.item] = False
                         print(f"You disabled the prestige for the {tool.item}")
 

@@ -12,8 +12,9 @@ from system.lib.minescript import EventQueue, EventType, player, player_inventor
 
 
 STOP_KEY = 333
+SOUND_RESETER_KEY = 330
 
-def kill_process(stop_event: threading.Event):
+def kill_process(stop_event: threading.Event, reset_sound):
     with EventQueue() as event_queue:
         event_queue.register_key_listener()
         while not stop_event.is_set():
@@ -23,6 +24,9 @@ def kill_process(stop_event: threading.Event):
                     print("Stopping")
                     stop_event.set()
                     break
+                if ev.key == SOUND_RESETER_KEY:
+                    reset_sound[0] = True
+                    
 
 
 def distance_between_points(p1: Tuple[float, float, float], p2: Tuple[float, float, float]) -> float:
@@ -161,7 +165,7 @@ POSSIBLE_TOOL = [
     "minecraft:diamond_pickaxe",
 ]
 
-def main(stop_event: threading.Event):
+def main(stop_event: threading.Event, reset_sound):
 
     check = False 
     
@@ -173,6 +177,10 @@ def main(stop_event: threading.Event):
     )
     
     while not stop_event.is_set():
+        
+        if reset_sound[0]:
+            check = False
+            reset_sound[0] = False
         
         if check:
             winsound.Beep(2000, 50)
@@ -237,10 +245,10 @@ def main(stop_event: threading.Event):
 if __name__ == "__main__":
     print("AVAST running")
     stop_event = threading.Event()
-    prestige_to_pass = [False]
+    reset_sound = [False]
 
-    t1 = threading.Thread(target=kill_process, args=(stop_event,), daemon=True)
-    t2 = threading.Thread(target=main, args=(stop_event,), daemon=True)
+    t1 = threading.Thread(target=kill_process, args=(stop_event, reset_sound,), daemon=True)
+    t2 = threading.Thread(target=main, args=(stop_event, reset_sound,), daemon=True)
 
     t1.start()
     t2.start()
