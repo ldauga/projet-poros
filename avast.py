@@ -186,8 +186,8 @@ def main(stop_event: threading.Event):
             None,
         )
         
-        if distance_between_points(last_pos, player_position()) > 4:
-            print("activated by movement")
+        if distance_between_points(last_pos, player_position()) > 8:
+            print(f"activated by movement | distance : {distance_between_points(last_pos, player_position())}")
             
             
             check = True
@@ -229,7 +229,7 @@ def main(stop_event: threading.Event):
         
             
             
-        sleep(.001)
+        sleep(.01)
         
 
 

@@ -22,7 +22,7 @@ def prestige_teller(stop_event: threading.Event, prestige_to_pass, tell_prestige
             continue
         if tell_prestige.get(prestige_to_pass[0], False):
             winsound.Beep(400, 500)
-        sleep(1)
+        sleep(10)
 
 
 def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestige):
@@ -60,6 +60,8 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestig
 
                     if level >= required_level and tool:
                         prestige_to_pass[0] = tool.item
+                        winsound.Beep(400, 500)
+                        
 
                 elif f"{player_name.lower()} vient de passer prestige" in msg:
                     # Recompute after prestige to show correct next target
@@ -100,14 +102,12 @@ def input_process(stop_event: threading.Event, tell_prestige):
         event_queue.register_key_listener()
         while not stop_event.is_set():
             ev = event_queue.get()
-            if ev and ev.type == EventType.KEY and ev.action == 1:  # key down
+            if ev and ev.type == EventType.KEY and ev.action == 1:
                 if ev.key == PRESTIGE_SOUND_STOPPER_KEY:
                     tool = next((item for item in player_inventory() if item.item in POSSIBLE_TOOL), None)
                     if tool:
                         tell_prestige[tool.item] = False
-                    print(ev.key)
-                #     stop_event.set()
-                #     break
+                        print(f"You disabled the prestige for the {tool.item}")
 
 
 if __name__ == "__main__":
