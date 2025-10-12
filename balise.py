@@ -120,7 +120,7 @@ if __name__ == "__main__":
         "minecraft:diamond_pickaxe": True,
     }
 
-    t1 = threading.Thread(target=input_process, args=(stop_event, tell_prestige), daemon=True)
+    t1 = threading.Thread(target=input_process, args=(stop_event, prestige_to_pass, tell_prestige), daemon=True)
     t2 = threading.Thread(target=main, args=(stop_event,), daemon=True)  # <-- tuple!
     t3 = threading.Thread(target=prestige_checker, args=(stop_event, prestige_to_pass, tell_prestige), daemon=True)
     t4 = threading.Thread(target=prestige_teller, args=(stop_event, prestige_to_pass, tell_prestige), daemon=True)
