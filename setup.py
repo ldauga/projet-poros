@@ -1,5 +1,6 @@
 from system.lib.minescript import EventQueue, EventType
 import pyautogui
+import pyperclip
 
 
 check = True
@@ -18,3 +19,4 @@ with EventQueue() as event_queue:
         
         x, y = pyautogui.position()
         print(f"Position de la souris : ({x}, {y})")
+        pyperclip.copy(f"({x}, {y})")

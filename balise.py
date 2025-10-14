@@ -80,17 +80,17 @@ def main(stop_event: threading.Event):
     while not stop_event.is_set():
         x, y, z = player().position
 
-        if near(y, 111.93750):
-            execute("/farm")
-            sleep(0.5)
+        # if near(y, 111.93750):
+        #     execute("/farm")
+        #     sleep(0.5)
 
-        if -38 <= x <= -37 and 13 <= z <= 18 and -4 <= y <= -2:
-            execute("/farm")
-            sleep(0.5)
+        # if -38 <= x <= -37 and 13 <= z <= 18 and -4 <= y <= -2:
+        #     execute("/farm")
+        #     sleep(0.5)
 
-        if -316 <= x <= -314 and 92 <= y <= 94 and 22 <= z <= 23:
-            execute("/mine")
-            sleep(0.5)
+        # if -316 <= x <= -314 and 92 <= y <= 94 and 22 <= z <= 23:
+        #     execute("/mine")
+        #     sleep(0.5)
 
         sleep(0.1)
 
