@@ -1,8 +1,11 @@
+import os
 import re
+import sys
 import threading
 import winsound
 from time import sleep
 
+from pygame_loader import play_mp3
 from system.lib.minescript import EventQueue, EventType, echo, execute, player, player_inventory
 
 STOP_KEY = 333
@@ -21,7 +24,8 @@ def prestige_teller(stop_event: threading.Event, prestige_to_pass, tell_prestige
             sleep(0.1)
             continue
         if tell_prestige.get(prestige_to_pass[0], False):
-            winsound.Beep(400, 500)
+            play_mp3(os.path.join(sys.path[0], "bing.mp3"))
+
         sleep(10)
 
 
@@ -61,7 +65,8 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestig
 
                     if level >= required_level and tool:
                         prestige_to_pass[0] = tool.item
-                        winsound.Beep(400, 500)
+                        play_mp3(os.path.join(sys.path[0], "bing.mp3"))
+
                         
 
                 elif f"{player_name.lower()} vient de passer prestige" in msg:
