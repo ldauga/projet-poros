@@ -79,7 +79,7 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestig
                     prestige_to_pass[0] = None
 
 
-def main(stop_event: threading.Event):
+def balise(stop_event: threading.Event):
     def near(value, target, tol=0.01):
         return abs(value - target) <= tol
 
@@ -118,7 +118,7 @@ def input_process(stop_event: threading.Event, prestige_to_pass, tell_prestige):
                         
 
 if __name__ == "__main__":
-    print("Balise running")
+    print("Poros running")
     stop_event = threading.Event()
     prestige_to_pass = [None]
 
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     }
 
     t1 = threading.Thread(target=input_process, args=(stop_event, prestige_to_pass, tell_prestige), daemon=True)
-    t2 = threading.Thread(target=main, args=(stop_event,), daemon=True)  # <-- tuple!
+    t2 = threading.Thread(target=balise, args=(stop_event,), daemon=True)  # <-- tuple!
     t3 = threading.Thread(target=prestige_checker, args=(stop_event, prestige_to_pass, tell_prestige), daemon=True)
     t4 = threading.Thread(target=prestige_teller, args=(stop_event, prestige_to_pass, tell_prestige), daemon=True)
 

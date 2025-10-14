@@ -79,11 +79,15 @@
 # sub = detect_subserver()
 # echo("Current subserver:", sub if sub else "unknown")
 
-import sys
-import os
-from pygame_loader import play_mp3
+print("""
+__   _  __  __   __ 
+|__)/  \\|__)/   \\ /__`
+|    \\_/ |  \\\\__/ .__/
+""")
 
-play_mp3(os.path.join(sys.path[0], "bing.mp3"))
 
-print("finish")
+
+# play_mp3(os.path.join(sys.path[0], "bing.mp3"))
+
+# print("finish")
 

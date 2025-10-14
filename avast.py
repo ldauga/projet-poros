@@ -1,6 +1,8 @@
 
 
 import math
+import os
+import sys
 import threading
 from time import sleep
 from typing import Tuple
@@ -8,6 +10,7 @@ import winsound
 
 import pyautogui
 
+from pygame_loader import play_mp3
 from system.lib.minescript import EventQueue, EventType, player, player_inventory, player_orientation, player_position
 
 
@@ -183,10 +186,8 @@ def main(stop_event: threading.Event, reset_sound):
             reset_sound[0] = False
         
         if check:
-            winsound.Beep(2000, 50)
-            print("VERIF EN COURS")
-        
-        
+            play_mp3(os.path.join(sys.path[0], "alarm.mp3"))
+
         yaw, pitch = player_orientation()
         pos = player_position()
         tool = next(
@@ -205,7 +206,8 @@ def main(stop_event: threading.Event, reset_sound):
             
             pyautogui.press("F7")
             
-            winsound.Beep(2000, 50)
+            play_mp3(os.path.join(sys.path[0], "alarm.mp3"))
+
         
         # if abs(last_yaw - yaw) > 90:
         #     print("activated by rotation")
@@ -215,7 +217,8 @@ def main(stop_event: threading.Event, reset_sound):
             
         #     pyautogui.press("F7")
             
-        #     winsound.Beep(2000, 50)
+        #     play_mp3(os.path.join(sys.path[0], "alarm.mp3"))
+
         
         if tool is None or tool.slot != last_tool.slot or tool.selected != last_tool.selected:
             print("activated by tool")
@@ -225,7 +228,8 @@ def main(stop_event: threading.Event, reset_sound):
             
             pyautogui.press("F7")
             
-            winsound.Beep(2000, 50)
+            play_mp3(os.path.join(sys.path[0], "alarm.mp3"))
+
         
         
         
