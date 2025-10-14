@@ -53,14 +53,11 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestig
                     if not mlevel:
                         continue
                     level = int(mlevel.group(1))
-                    print("outil level:", level)
                     
 
                     tool = next((item for item in player_inventory() if item.item in POSSIBLE_TOOL), None)
                     prestige_level = get_prestige_level(tool) or 0
                     required_level = INITIAL_PRESTIGE + 10 * prestige_level
-                    print("prestige actuel:", prestige_level)
-                    print("level requis:", required_level)
 
                     if level >= required_level and tool:
                         prestige_to_pass[0] = tool.item

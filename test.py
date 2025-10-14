@@ -79,9 +79,10 @@
 # sub = detect_subserver()
 # echo("Current subserver:", sub if sub else "unknown")
 
+import sys
 import pygame
 pygame.mixer.init()
-pygame.mixer.music.load("bing.mp3")
+pygame.mixer.music.load(sys.path[0] + "/bing.mp3")
 pygame.mixer.music.play()
 while pygame.mixer.music.get_busy():
     pygame.time.Clock().tick(10)
