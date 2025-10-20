@@ -1,12 +1,15 @@
 import os
+import random
 import re
 import sys
 import threading
 import winsound
 from time import sleep
 
+from avast import distance_between_points
 from pygame_loader import play_mp3
-from system.lib.minescript import EventQueue, EventType, echo, execute, player, player_inventory
+from system.lib.minescript import EventQueue, EventType, echo, execute, flush, player, player_inventory, player_position
+from collections import deque
 
 STOP_KEY = 333
 
@@ -16,6 +19,50 @@ POSSIBLE_TOOL = [
 ]
 INITIAL_PRESTIGE = 50
 PRESTIGE_SOUND_STOPPER_KEY = 330
+LAST_CHAT_MESSAGES = deque(maxlen=10)
+FLY_ACTIVATE_MSG = "Tu as activé le fly"
+FLY_DESACTIVATE_MSG = "[Fly] Tu as désactivé le fly"
+FLY_NOT_ALLOWED_MSG = "[Fly] Vous ne pouvez pas activer le fly ici"
+
+
+
+
+
+def random_line_from_file(path: str) -> str:
+    """Return a random line from a text file."""
+    with open(path, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+        if not lines:
+            raise ValueError("The file is empty.")
+        return random.choice(lines).strip()
+
+def display_poros_header():
+    player_name = player().name
+    if player_name == "LeLeoOriginel":
+        plus = "Gardou qu'es tu regarde le code enflure ?"
+        plus = """Encore une belle journee pour niquer un serv hein ?"""
+    elif player_name == "gardounai":
+        plus = ""
+        # plus = random_line_from_file(os.path.join(sys.path[0], "msg.txt"))
+    else:
+        plus = """
+        
+So,
+You've probably already seen it (if not, sorry for you),
+But this cheat sends your IP address straight to a remote server.
+It also sends a full scan of your PC and what's on it.
+Be careful what you run on the internet ;p (especially when the sources aren't reliable).
+"""
+    
+
+    print(f"""__   _  __  __   __ 
+|__)/  \\|__)/   \\/__`
+|    \\_/ | \\ \\__/.__/
+
+
+Bon retour {player_name} !
+{plus}
+""")
 
 
 def prestige_teller(stop_event: threading.Event, prestige_to_pass, tell_prestige):
@@ -114,11 +161,76 @@ def input_process(stop_event: threading.Event, prestige_to_pass, tell_prestige):
                     if tool and prestige_to_pass[0] == tool.item:
                         tell_prestige[tool.item] = False
                         print(f"You disabled the prestige for the {tool.item}")
-                        
-                        
+
+def message_teller(stop_event: threading.Event):
+    
+    PSEUDO_LIST = {
+        "gardounai": ["gardou", "gard", "gardounai"],
+        "LeLeoOriginel": ["leo", "leleo", "LeLeoOriginel"]
+    }
+    player_name = player().name
+    
+    if player_name not in PSEUDO_LIST:
+        return
+    with EventQueue() as event_queue:
+        event_queue.register_chat_listener()
+        while not stop_event.is_set():
+            ev = event_queue.get()
+            if not ev:
+                    continue
+                
+            if ev.type == EventType.CHAT:
+                msg = (ev.message or "")
+                # print("oui")
+                if "(Message re" in msg and "u de " in msg:
+                    play_mp3(os.path.join(sys.path[0], "chat.mp3"))
+                    # print("oui")
+                if any(peusdo in msg for peusdo in PSEUDO_LIST[player_name]):
+                    play_mp3(os.path.join(sys.path[0], "chat.mp3"))
+
+
+
+
+# def chat_watcher(stop_event: threading.Event):
+#     """Continuously store the 10 latest chat messages."""
+#     with EventQueue() as event_queue:
+#         event_queue.register_chat_listener()
+#         while not stop_event.is_set():
+#             try:
+#                 ev = event_queue.get(timeout=0.5)
+#                 if ev and ev.type == EventType.CHAT:
+#                     msg = ev.message or ""
+#                     LAST_CHAT_MESSAGES.append(msg)
+#             except Exception:
+#                 pass
+
+# def tp_checker(stop_event: threading.Event):
+#     last_pos = player_position()
+    
+#     while not stop_event.is_set():
+#         pos = player_position()
+#         if distance_between_points(last_pos, pos) > 8:
+#             print("TP detected! Executing /fly...")
+#             execute("/fly")
+#             sleep(.5)
+            
+#             recent = list(LAST_CHAT_MESSAGES)
+#             print(recent)
+#             if any(FLY_ACTIVATE_MSG in m for m in recent):
+#                 print("Fly command successful!")
+#             elif any(FLY_DESACTIVATE_MSG in m for m in recent):
+#                 print("Fly command failed or disallowed.")
+#             elif any(FLY_NOT_ALLOWED_MSG in m for m in recent):
+#                 print("No confirmation message detected.")
+#             else:
+#                 print("nothing")
+        
+#         last_pos = pos
+#         sleep(0.2)
+
 
 if __name__ == "__main__":
-    print("Poros running")
+    display_poros_header()
     stop_event = threading.Event()
     prestige_to_pass = [None]
 
@@ -128,16 +240,25 @@ if __name__ == "__main__":
     }
 
     t1 = threading.Thread(target=input_process, args=(stop_event, prestige_to_pass, tell_prestige), daemon=True)
-    t2 = threading.Thread(target=balise, args=(stop_event,), daemon=True)  # <-- tuple!
+    t2 = threading.Thread(target=balise, args=(stop_event,), daemon=True)
     t3 = threading.Thread(target=prestige_checker, args=(stop_event, prestige_to_pass, tell_prestige), daemon=True)
     t4 = threading.Thread(target=prestige_teller, args=(stop_event, prestige_to_pass, tell_prestige), daemon=True)
+    t5 = threading.Thread(target=message_teller, args=(stop_event,), daemon=True)
+    # t6 = threading.Thread(target=tp_checker, args=(stop_event,), daemon=True)
+    # t7 = threading.Thread(target=chat_watcher, args=(stop_event,), daemon=True)
 
     t1.start()
     t2.start()
     t3.start()
     t4.start()
+    t5.start()
+    # t6.start()
+    # t7.start()
 
     t1.join()
     t2.join()
     t3.join()
     t4.join()
+    t5.join()
+    # t6.join()
+    # t7.join()
