@@ -212,7 +212,7 @@ def chat_watcher(stop_event: threading.Event):
         event_queue.register_chat_listener()
         while not stop_event.is_set():
             try:
-                ev = event_queue.get(timeout=0.5)
+                ev = event_queue.get()
                 if ev and ev.type == EventType.CHAT:
                     msg = ev.message or ""
                     LAST_CHAT_MESSAGES.append(msg)
@@ -262,7 +262,7 @@ if __name__ == "__main__":
     t4 = threading.Thread(target=prestige_teller, args=(stop_event, prestige_to_pass, tell_prestige), daemon=True)
     t5 = threading.Thread(target=message_teller, args=(stop_event,), daemon=True)
     t6 = threading.Thread(target=tp_checker, args=(stop_event,), daemon=True)
-    t7 = threading.Thread(target=chat_watcher, args=(stop_event,), daemon=True)
+    # t7 = threading.Thread(target=chat_watcher, args=(stop_event,), daemon=True)
 
     t1.start()
     t2.start()
@@ -270,7 +270,7 @@ if __name__ == "__main__":
     t4.start()
     t5.start()
     t6.start()
-    t7.start()
+    # t7.start()
 
     t1.join()
     t2.join()
@@ -278,4 +278,4 @@ if __name__ == "__main__":
     t4.join()
     t5.join()
     t6.join()
-    t7.join()
+    # t7.join()
