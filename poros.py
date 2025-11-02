@@ -9,7 +9,7 @@ from time import sleep
 
 from avast import distance_between_points
 from pygame_loader import play_mp3
-from system.lib.minescript import EventQueue, EventType, echo, execute, flush, player, player_inventory, player_position
+from system.lib.minescript import EventQueue, EventType, chat, echo, execute, flush, player, player_inventory, player_position
 from collections import deque
 
 STOP_KEY = 333
@@ -145,6 +145,10 @@ def balise(stop_event: threading.Event):
 
     while not stop_event.is_set():
         x, y, z = player().position
+        
+        
+        if (x, y, z) == (1522.5, 106.5, 303.5):
+            chat(".killAura.disable();")
 
         # if near(y, 111.93750):
         #     execute("/farm")
@@ -220,23 +224,23 @@ def tp_checker(stop_event: threading.Event):
     
     while not stop_event.is_set():
         pos = player_position()
-        if horizontal_distance(last_pos, pos) > 8:
+        if horizontal_distance(last_pos, pos) > 10:
             execute("/fly")
             sleep(.3)
             
-            for m in reversed(LAST_CHAT_MESSAGES):
-                if FLY_ACTIVATE_MSG in m:
-                    print("A L IS")
-                    break
-                elif FLY_DESACTIVATE_MSG in m:
-                    print("A L IS")
-                    execute("/fly")
-                    break
-                elif FLY_NOT_ALLOWED_MSG in m:
-                    print("AU SPAWN")
-                    break
-                else:
-                    print("nothing")
+        #     for m in reversed(LAST_CHAT_MESSAGES):
+        #         if FLY_ACTIVATE_MSG in m:
+        #             print("A L IS")
+        #             break
+        #         elif FLY_DESACTIVATE_MSG in m:
+        #             print("A L IS")
+        #             execute("/fly")
+        #             break
+        #         elif FLY_NOT_ALLOWED_MSG in m:
+        #             print("AU SPAWN")
+        #             break
+        #         else:
+        #             print("nothing")
         
         last_pos = pos
         sleep(0.2)

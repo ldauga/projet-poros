@@ -198,6 +198,7 @@ def main(stop_event: threading.Event, reset_sound):
         if distance_between_points(last_pos, pos) > 8:
             
             if int(pos[0]) == 102 and int(pos[1]) == 125 and int(pos[2]) == -32:
+                last_pos = pos
                 continue
             
             
