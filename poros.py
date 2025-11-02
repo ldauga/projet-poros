@@ -140,6 +140,7 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestig
 
 
 def balise(stop_event: threading.Event):
+    print("balise")
     def near(value, target, tol=0.01):
         return abs(value - target) <= tol
 
