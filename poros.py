@@ -146,6 +146,8 @@ def balise(stop_event: threading.Event):
     while not stop_event.is_set():
         x, y, z = player().position
         
+        print(x, y, z)
+        
         
         if (x, y, z) == (1522.5, 106.5, 303.5):
             chat(".killAura.disable();")
