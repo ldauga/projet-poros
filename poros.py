@@ -140,14 +140,11 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestig
 
 
 def balise(stop_event: threading.Event):
-    print("balise")
     def near(value, target, tol=0.01):
         return abs(value - target) <= tol
 
     while not stop_event.is_set():
         x, y, z = player().position
-        
-        print(x, y, z)
         
         
         if (x, y, z) == (1522.5, 106.5, 303.5):
