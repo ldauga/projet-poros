@@ -182,7 +182,8 @@ def main(stop_event, all_relics):
             sleep(1)
             dungeon = sys.argv[1]
             
-            chat('#goto ' + DATA[dungeon]["start"])
+            if not stop_event.is_set():
+                chat('#goto ' + DATA[dungeon]["start"])
             
             while not stop_event.is_set():
                 if (entity := player_get_targeted_entity(3)) and has_unprintable_char(entity.name):
@@ -190,7 +191,7 @@ def main(stop_event, all_relics):
                     player_press_use(False)
                     
                     if dungeon == "event":
-                        sleep(.3)
+                        sleep(1)
                         click_on_event_tp()
                     break
                 sleep(0.1)
@@ -213,8 +214,10 @@ def main(stop_event, all_relics):
                 tp_zone = " ".join([str(int(i)) for i in tp_zone])
                 
                 
-            chat("#goto " + farm_zone)
-            chat(".killAura.enable();")
+            if not stop_event.is_set():
+                chat("#goto " + farm_zone)
+            if not stop_event.is_set():
+                chat(".killAura.enable();")
             
             while not stop_event.is_set() and not all_relics[0]:
                 sleep(3)
@@ -222,8 +225,9 @@ def main(stop_event, all_relics):
             chat("#stop")
             chat(".killAura.disable();")
             all_relics[0] = False
-            chat("#set allowBreakAnyway " + DATA[dungeon]["tp_type"])
-            chat("#mine " + DATA[dungeon]["tp_type"])
+            if not stop_event.is_set():
+                chat("#set allowBreakAnyway " + DATA[dungeon]["tp_type"])
+                chat("#mine " + DATA[dungeon]["tp_type"])
             # chat("#goto " + tp_zone)
             while not stop_event.is_set():
                 if (block := player_get_targeted_block()) and block.type == DATA[dungeon]["tp_type"]:
@@ -235,7 +239,8 @@ def main(stop_event, all_relics):
             
             kill_aura_enable = False
             last_pos = player_position()
-            chat(".killAura.enable();")
+            if not stop_event.is_set():
+                chat(".killAura.enable();")
             
             if dungeon != "event":
                 while not stop_event.is_set():
@@ -248,10 +253,11 @@ def main(stop_event, all_relics):
                     if horizontal_distance(last_pos, pos) > 30:
                         print("TP")
                         break
-                    chat("#goto " + boss_kill)
+                    if not stop_event.is_set():
+                        chat("#goto " + boss_kill)
                     last_pos = pos
                     
-                    sleep(0.1)
+                    sleep(1)
                     
                 
             
