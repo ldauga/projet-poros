@@ -107,7 +107,7 @@ DATA = {
         "start": "1498 104 264",
         "farm": "-385 53 4396",
         "boss_tp": "-385 54 4420",
-        "tp_type": "minecraft:carved_pumpkin",
+        "tp_type": "minecraft:red_sandstone_wall",
         # "boss_tp": {
         #     "position":,
         #     "orientation":,
