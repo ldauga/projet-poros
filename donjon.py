@@ -27,7 +27,7 @@ DATA = {
         "farm": "-839 29 499",
         "boss_tp": "-935 43 395",
         "tp_type": "minecraft:sea_lantern",
-        "boss_kill": "-353 58 -111",
+        "boss_kill": "1575 53 -60",
     },
         
     
@@ -179,6 +179,7 @@ def main(stop_event, all_relics):
                     
                     if horizontal_distance(last_pos, pos) > 30:
                         print("TP")
+                        chat("#sel clear")
                         break
                     
                     if (block := player_get_targeted_block()) and block.type == DATA[dungeon]["tp_type"]:
