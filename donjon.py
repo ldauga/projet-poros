@@ -8,19 +8,8 @@ import pyautogui
 from system.lib.minescript import EventQueue, EventType, chat, entities, execute, player, player_get_targeted_block, player_get_targeted_entity, player_position, player_press_use, player_set_orientation
 
 DATA = {
-    # "tuto": {
-    #     "start": {"position": "1498 103 339", "orientation": (0, -30)},
-    #     "farm":,
-    #     "boss_tp": {
-    #         "position":,
-    #         "orientation":,
-    #     },
-    #     "boss_kill":,
-        
 
-    # },
     "mirage": {
-        "start": "1489 104 338",
         "farm": "86 27 -692",
         "boss_tp": "84 28 -605",
         "tp_type": "minecraft:sea_lantern",
@@ -28,91 +17,28 @@ DATA = {
     },
     
     "maya": {
-        "start": "1484 104 329",
         "farm": "1354 16 1758",
         "boss_tp": " 1400 -13 1814",
         "tp_type": "minecraft:sea_lantern",
         "boss_kill": "772 59 -106",
     },
-
-
-    # },
-    # "forteresse": {
-    #     "start": {"position": "1485 103 320", "orientation": (90, -30)},
-    #     "farm":,
-    #     "boss_tp": {
-    #         "position":,
-    #         "orientation":,
-    #     },
-    #     "boss_kill":,
-        
-
-    # },
-    # "manoir": {
-    #     "start": {"position": "1485 103 311", "orientation": (90, -30)},
-    #     "farm":,
-    #     "boss_tp": {
-    #         "position":,
-    #         "orientation":,
-    #     },
-    #     "boss_kill":,
-        
-
-    # },
-    # "crypte": {
-    #     "start": {"position": "1485 103 295", "orientation": (90, -30)},
-    #     "farm":,
-    #     "boss_tp": {
-    #         "position":,
-    #         "orientation":,
-    #     },
-    #     "boss_kill":,
     
-    "bunker": {
-        "start": "1482 104 286",
-        "farm": "517 81 647",
+    "manoir": {
+        "farm": "-839 29 499",
         "boss_tp": "1400 -13 1814",
         "tp_type": "minecraft:sea_lantern",
         "boss_kill": "-353 58 -111",
     },
         
-
-    # },
-    # "bunker": {
-    #     "start": {"position": "1485 103 286", "orientation": (90, -30)},
-    #     "farm":,
-    #     "boss_tp": {
-    #         "position":,
-    #         "orientation":,
-    #     },
-    #     "boss_kill":,
-        
-
-    # },
-    # "forge": {
-    #     "start": {"position": "1487 103 277", "orientation": (90, -30)},
-    #     "farm":,
-    #     "boss_tp": {
-    #         "position":,
-    #         "orientation":,
-    #     },
-    #     "boss_kill":,
-        
-
-    # },
-    # "abysse": {
-    #     "start": {"position": "1489 103 271", "orientation": (180, -30)},
-    #     "farm":,
-    #     "boss_tp": {
-    #         "position":,
-    #         "orientation":,
-    #     },
-    #     "boss_kill":,
-        
-
-    # },
+    
+    "bunker": {
+        "farm": "517 81 647",
+        "boss_tp": "584 79 662",
+        "tp_type": "minecraft:sea_lantern",
+        "boss_kill": "-353 58 -111",
+    },
+ 
     "event": {
-        "start": "1498 104 264",
         "farm": "-385 53 4396",
         "boss_tp": "-385 54 4420",
         "tp_type": "minecraft:red_sandstone_wall",
@@ -190,9 +116,9 @@ def main(stop_event, all_relics):
     else:
         try:
             dungeon = sys.argv[1]
-            execute("warp donjon_" + dungeon.capitalize())
-            sleep(2)
             while not stop_event.is_set():
+                execute("warp donjon_" + dungeon.capitalize())
+                sleep(2)
                 
                 # if not stop_event.is_set():
                 #     chat('#goto ' + DATA[dungeon]["start"])
@@ -242,9 +168,14 @@ def main(stop_event, all_relics):
                     
                     pos = player().position
                     
-                    
                     chat("#set allowBreakAnyway " + DATA[dungeon]["tp_type"])
-                    chat("#mine " + DATA[dungeon]["tp_type"])
+                    chat("#sel pos1 " + DATA[dungeon]["boss_tp"])
+                    chat("#sel pos2 " + DATA[dungeon]["boss_tp"])
+                    
+                    chat("#sel cleararea")
+
+                    
+                    # chat("#mine " + DATA[dungeon]["tp_type"])
                     
                     if horizontal_distance(last_pos, pos) > 30:
                         print("TP")
@@ -314,7 +245,7 @@ def relique_checker(stop_event, all_relics):
                 
             if ev.type == EventType.CHAT:
                 msg = (ev.message or "")
-                if "32/32" in msg or "64/64" in msg:
+                if "32/32" in msg or "64/64" in msg or "azertyuiop" in msg:
                     all_relics[0] = True
         
 if __name__ == "__main__":
