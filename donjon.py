@@ -184,28 +184,31 @@ def main(stop_event, all_relics):
     if len(sys.argv) < 2:
         print("Enter dungeon type: " + " | ".join(DATA.keys()))
         return
+    elif sys.argv[1] not in DATA.keys():
+        print("Enter dungeon type: " + " | ".join(DATA.keys()))
+        return
     else:
         try:
-            execute("donjon")
-            sleep(3)
             dungeon = sys.argv[1]
+            execute("warp donjon_" + dungeon.capitalize())
+            sleep(2)
             while not stop_event.is_set():
                 
-                if not stop_event.is_set():
-                    chat('#goto ' + DATA[dungeon]["start"])
+                # if not stop_event.is_set():
+                #     chat('#goto ' + DATA[dungeon]["start"])
                 
-                while not stop_event.is_set():
-                    if (entity := player_get_targeted_entity(3)) and has_unprintable_char(entity.name):
-                        player_press_use(True)
-                        player_press_use(False)
+                # while not stop_event.is_set():
+                #     if (entity := player_get_targeted_entity(3)) and has_unprintable_char(entity.name):
+                #         player_press_use(True)
+                #         player_press_use(False)
                         
-                        if dungeon == "event":
-                            sleep(1)
-                            click_on_event_tp()
-                        break
-                    sleep(0.1)
-                chat("#stop")
-                sleep(1.5)
+                #         if dungeon == "event":
+                #             sleep(1)
+                #             click_on_event_tp()
+                #         break
+                #     sleep(0.1)
+                # chat("#stop")
+                # sleep(1.5)
 
                 if dungeon != "event":
                     farm_zone = DATA[dungeon]["farm"]
@@ -215,7 +218,6 @@ def main(stop_event, all_relics):
                     pos = player().position
                     farm_zone = [-385, 52, pos[2]]
                     farm_zone[2] += 22
-                    print(farm_zone)
                     
                     tp_zone = [farm_zone[0], farm_zone[1], farm_zone[2]]
                     tp_zone[2] += 22
@@ -234,17 +236,27 @@ def main(stop_event, all_relics):
                 chat("#stop")
                 chat(".killAura.disable();")
                 all_relics[0] = False
-                if not stop_event.is_set():
+                    
+                last_pos = player_position()
+                while not stop_event.is_set():
+                    
+                    pos = player().position
+                    
+                    
                     chat("#set allowBreakAnyway " + DATA[dungeon]["tp_type"])
                     chat("#mine " + DATA[dungeon]["tp_type"])
-                # chat("#goto " + tp_zone)
-                while not stop_event.is_set():
+                    
+                    if horizontal_distance(last_pos, pos) > 30:
+                        print("TP")
+                        break
+                    
                     if (block := player_get_targeted_block()) and block.type == DATA[dungeon]["tp_type"]:
                         chat("#stop")
                         player_press_use(True)
                         player_press_use(False)
-                        break
+                        # break
                     sleep(0.1)
+                    last_pos = pos
                 sleep(2)
                 
                 kill_aura_enable = False
