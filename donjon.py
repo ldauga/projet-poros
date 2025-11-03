@@ -229,8 +229,11 @@ def main(stop_event, all_relics):
                 chat("#set allowBreakAnyway " + DATA[dungeon]["tp_type"])
                 chat("#mine " + DATA[dungeon]["tp_type"])
             # chat("#goto " + tp_zone)
+            tp_block = block.type == DATA[dungeon]["tp_type"]
+            if dungeon != "event":
+                tp_block = "minecraft:carved_pumpkin"
             while not stop_event.is_set():
-                if (block := player_get_targeted_block()) and block.type == DATA[dungeon]["tp_type"]:
+                if (block := player_get_targeted_block()) and block.type == tp_block:
                     player_press_use(True)
                     player_press_use(False)
                     break
