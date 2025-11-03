@@ -67,6 +67,14 @@ DATA = {
     #         "orientation":,
     #     },
     #     "boss_kill":,
+    
+    "bunker": {
+        "start": "1482 104 286",
+        "farm": "517 81 647",
+        "boss_tp": "1400 -13 1814",
+        "tp_type": "minecraft:sea_lantern",
+        "boss_kill": "-353 58 -111",
+    },
         
 
     # },
