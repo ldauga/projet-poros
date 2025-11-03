@@ -18,14 +18,14 @@ DATA = {
     
     "maya": {
         "farm": "1354 16 1758",
-        "boss_tp": " 1400 -13 1814",
+        "boss_tp": "1400 -12 1816",
         "tp_type": "minecraft:sea_lantern",
         "boss_kill": "772 59 -106",
     },
     
     "manoir": {
         "farm": "-839 29 499",
-        "boss_tp": "1400 -13 1814",
+        "boss_tp": "-935 43 395",
         "tp_type": "minecraft:sea_lantern",
         "boss_kill": "-353 58 -111",
     },
