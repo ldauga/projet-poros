@@ -229,7 +229,7 @@ def main(stop_event, all_relics):
                 chat("#set allowBreakAnyway " + DATA[dungeon]["tp_type"])
                 chat("#mine " + DATA[dungeon]["tp_type"])
             # chat("#goto " + tp_zone)
-            tp_block = block.type == DATA[dungeon]["tp_type"]
+            tp_block = DATA[dungeon]["tp_type"]
             if dungeon != "event":
                 tp_block = "minecraft:carved_pumpkin"
             while not stop_event.is_set():
