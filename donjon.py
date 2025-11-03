@@ -164,15 +164,15 @@ def main(stop_event, all_relics):
                 all_relics[0] = False
                     
                 last_pos = player_position()
+                chat("#set allowBreakAnyway " + DATA[dungeon]["tp_type"])
+                chat("#sel pos1 " + DATA[dungeon]["boss_tp"])
+                chat("#sel pos2 " + DATA[dungeon]["boss_tp"])
+                
+                chat("#sel cleararea")
                 while not stop_event.is_set():
                     
                     pos = player().position
                     
-                    chat("#set allowBreakAnyway " + DATA[dungeon]["tp_type"])
-                    chat("#sel pos1 " + DATA[dungeon]["boss_tp"])
-                    chat("#sel pos2 " + DATA[dungeon]["boss_tp"])
-                    
-                    chat("#sel cleararea")
 
                     
                     # chat("#mine " + DATA[dungeon]["tp_type"])
