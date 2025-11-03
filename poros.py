@@ -139,6 +139,9 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestig
                     prestige_to_pass[0] = None
 
 
+SPAWN = (0.5, 128, 0.5)
+WARP_DONJON = (1522.5, 106.5, 303.5)
+
 def balise(stop_event: threading.Event):
     def near(value, target, tol=0.01):
         return abs(value - target) <= tol
@@ -147,7 +150,9 @@ def balise(stop_event: threading.Event):
         x, y, z = player().position
         
         
-        if (x, y, z) == (1522.5, 106.5, 303.5):
+        if (x, y, z) == WARP_DONJON:
+            chat(".killAura.disable();")
+        if (x, y, z) == SPAWN:
             chat(".killAura.disable();")
 
         # if near(y, 111.93750):
@@ -247,6 +252,9 @@ def tp_checker(stop_event: threading.Event):
 
 
 if __name__ == "__main__":
+    
+    chat(".killAura.disable();")
+    
     display_poros_header()
     stop_event = threading.Event()
     prestige_to_pass = [None]
