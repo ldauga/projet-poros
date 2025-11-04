@@ -10,6 +10,8 @@ condes_items = [
     "minecraft:wheat",
     "minecraft:coal",
     "minecraft:raw_copper",
+    "minecraft:raw_iron",
+    "minecraft:raw_gold",
 ]
 
 def main():
@@ -32,13 +34,13 @@ def main():
                 
                 
                 if sum([item.count for item in inv if item.item in condes_items ]) >= next_goal:
-                    next_goal = random.randint(128, 384)
+                    next_goal = random.randint(8 * 64, 16 * 64)
                     execute("/condense")
-                    time.sleep(0.3)
+                    time.sleep(0.7)
                     # flush()
-                elif sum([item.count for item in inv if item.item == "minecraft:paper"]) >= 1280:
+                elif sum([item.count for item in inv if item.item == "minecraft:paper"]) >= 64:
                     execute("/sellall")
-                    time.sleep(0.3)
+                    time.sleep(0.7)
 
 
 print('Seller running')

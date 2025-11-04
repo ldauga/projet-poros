@@ -24,8 +24,8 @@ DATA = {
     },
     
     "manoir": {
-        "farm": "-935 40 455",
-        "boss_tp": "-935 43 395",
+        "farm": "-935 43 395",
+        "boss_tp": "-935 41 420",
         "tp_type": "minecraft:sea_lantern",
         "boss_kill": "1575 53 -60",
     },
