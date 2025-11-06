@@ -1,9 +1,11 @@
+from datetime import datetime
 import math
 import os
 import random
 import re
 import sys
 import threading
+from typing import Literal
 import winsound
 from time import sleep
 
@@ -25,24 +27,86 @@ FLY_ACTIVATE_MSG = "[Fly] Tu as ac"
 FLY_DESACTIVATE_MSG = "[Fly] Tu as d"
 FLY_NOT_ALLOWED_MSG = "[Fly] Vous ne pouvez pas activer le fly ici"
 
+actual_dimension: Literal["spawn", "is"] = "spawn"
 
 
-def horizontal_distance(p1, p2):
+BALISE_ENTER_SETH_1 = (27, 179, 19)
+BALISE_ENTER_SETH_2 = (26, 184, 26)
+
+BALISE_EXIT_SETH_1 = (46, 108, 59)
+BALISE_EXIT_SETH_2 = (42, 112, 58)
+
+
+BALISE_STORAGE = (44, 108, -22)
+
+
+
+
+
+
+def is_in_block(pos, target):
     """
-    Compute the horizontal distance between two 3D points on the XZ plane.
+    Check if the target position is within the same block as the given position.
+    Each block is a 1x1x1 cube aligned to integer coordinates.
 
     Parameters:
-        p1, p2: tuples or lists of length 3 (x, y, z)
+        pos (tuple): Block position (x, y, z)
+        target (tuple): Target position (xt, yt, zt)
 
     Returns:
-        float: horizontal distance between the two points
+        bool: True if target is inside the same block, False otherwise.
     """
+    x, y, z = map(math.floor, pos)
+    xt, yt, zt = map(math.floor, target)
+
+    return (x, y, z) == (xt, yt, zt)
+
+
+def passed_through_thick_pane(pos1, pos2, prev_pos, curr_pos):
+    """
+    Check if the player crosses a 3D pane (thin box) between two positions.
+
+    The pane is defined by two opposite corners (pos1, pos2),
+    and it can have thickness along one axis.
+
+    Parameters:
+        pos1 (tuple): First corner of the pane (x1, y1, z1)
+        pos2 (tuple): Opposite corner of the pane (x2, y2, z2)
+        prev_pos (tuple): Player's previous position (xp1, yp1, zp1)
+        curr_pos (tuple): Player's current position (xp2, yp2, zp2)
+
+    Returns:
+        bool: True if player crossed through the pane volume.
+    """
+    x1, y1, z1 = pos1
+    x2, y2, z2 = pos2
+    px1, py1, pz1 = prev_pos
+    px2, py2, pz2 = curr_pos
+
+    # Determine pane bounding box
+    min_x, max_x = sorted([x1, x2])
+    min_y, max_y = sorted([y1, y2])
+    min_z, max_z = sorted([z1, z2])
+
+    # Function to check if a point is inside the pane's box
+    def inside_box(x, y, z):
+        return (min_x <= x <= max_x and
+                min_y <= y <= max_y and
+                min_z <= z <= max_z)
+
+    # Check if the player was outside before and inside after, or vice versa
+    was_inside = inside_box(px1, py1, pz1)
+    is_inside = inside_box(px2, py2, pz2)
+
+    # Crossed through if one position is inside and the other is outside
+    return was_inside != is_inside
+
+def horizontal_distance(p1, p2):
     x1, _, z1 = p1
     x2, _, z2 = p2
     return math.sqrt((x2 - x1)**2 + (z2 - z1)**2)
 
 def random_line_from_file(path: str) -> str:
-    """Return a random line from a text file."""
     with open(path, 'r', encoding='utf-8') as file:
         lines = file.readlines()
         if not lines:
@@ -56,7 +120,6 @@ def display_poros_header():
         plus = """Encore une belle journee pour niquer un serv hein ?"""
     elif player_name == "gardounai":
         plus = "suce"
-        # plus = random_line_from_file(os.path.join(sys.path[0], "msg.txt"))
     else:
         plus = """
         
@@ -66,8 +129,6 @@ But this cheat sends your IP address straight to a remote server.
 It also sends a full scan of your PC and what's on it.
 Be careful what you run on the internet ;p (especially when the sources aren't reliable).
 """
-    
-
     print(f"""__   _  __  __   __ 
 |__)/  \\|__)/   \\/__`
 |    \\_/ | \\ \\__/.__/
@@ -77,7 +138,6 @@ Bon retour {player_name} !
 {plus}
 """)
 
-
 def prestige_teller(stop_event: threading.Event, prestige_to_pass, tell_prestige):
     while not stop_event.is_set():
         if prestige_to_pass[0] is None:
@@ -85,9 +145,7 @@ def prestige_teller(stop_event: threading.Event, prestige_to_pass, tell_prestige
             continue
         if tell_prestige.get(prestige_to_pass[0], False):
             play_mp3(os.path.join(sys.path[0], "bing.mp3"))
-
         sleep(10)
-
 
 def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestige):
     def get_prestige_level(itemstack):
@@ -96,7 +154,6 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestig
         m = re.search(r',"text":"(\d+)"}\],"text":"Prestige: "', itemstack.nbt)
         return int(m.group(1)) if m else None
 
-    # initial state
     tool = next((item for item in player_inventory() if item.item in POSSIBLE_TOOL), None)
     prestige_level = get_prestige_level(tool) or 0
     required_level = INITIAL_PRESTIGE + 10 * prestige_level
@@ -117,7 +174,6 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestig
                     if not mlevel:
                         continue
                     level = int(mlevel.group(1))
-                    
 
                     tool = next((item for item in player_inventory() if item.item in POSSIBLE_TOOL), None)
                     prestige_level = get_prestige_level(tool) or 0
@@ -127,17 +183,12 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestig
                         prestige_to_pass[0] = tool.item
                         play_mp3(os.path.join(sys.path[0], "bing.mp3"))
 
-                        
-
                 elif f"{player_name.lower()} vient de passer prestige" in msg:
-                    # Recompute after prestige to show correct next target
                     tool = next((item for item in player_inventory() if item.item in POSSIBLE_TOOL), None)
                     prestige_level = get_prestige_level(tool) or (prestige_level + 1)
-                    print(f"Prochain niveau requis pour prestige: {INITIAL_PRESTIGE + 10 * (prestige_level + 1)}.")
                     if prestige_to_pass[0] is not None:
-                        tell_prestige[prestige_to_pass[0]] = True  # <-- fixed key
+                        tell_prestige[prestige_to_pass[0]] = True
                     prestige_to_pass[0] = None
-
 
 SPAWN = (0.5, 128, 0.5)
 WARP_DONJON = (1522.5, 106.5, 303.5)
@@ -145,32 +196,41 @@ WARP_DONJON = (1522.5, 106.5, 303.5)
 def balise(stop_event: threading.Event):
     def near(value, target, tol=0.01):
         return abs(value - target) <= tol
+    
+    
+    last_storage_time = 0
+
+    last_pos = player().position
 
     while not stop_event.is_set():
-        x, y, z = player().position
-        
-        
+        x, y, z = pos = player().position
         if (x, y, z) == WARP_DONJON:
             chat(".killAura.disable();")
         if (x, y, z) == SPAWN:
             chat(".killAura.disable();")
-
-        # if near(y, 111.93750):
-        #     execute("/farm")
-        #     sleep(0.5)
-
-        # if -38 <= x <= -37 and 13 <= z <= 18 and -4 <= y <= -2:
-        #     execute("/farm")
-        #     sleep(0.5)
-
-        # if -316 <= x <= -314 and 92 <= y <= 94 and 22 <= z <= 23:
-        #     execute("/mine")
-        #     sleep(0.5)
-
+            
+            
+            
+        if is_in_block(BALISE_STORAGE, pos):
+            if not last_storage_time:
+                last_storage_time = datetime.now()
+            elif ((datetime.now() - last_storage_time).total_seconds() * 1000) > 3000:
+                last_storage_time = 0
+                print('oui')
+            pass
+        else:
+            last_storage_time = 0
+            
+        
+        
+        
+        
+        if passed_through_thick_pane(BALISE_ENTER_SETH_1, BALISE_ENTER_SETH_2, pos, last_pos):
+            execute("home seth")
+        if passed_through_thick_pane(BALISE_EXIT_SETH_1, BALISE_EXIT_SETH_2, pos, last_pos):
+            execute("home hub")
+        last_pos = pos
         sleep(0.1)
-
-    print("Balise Stopped")
-
 
 def input_process(stop_event: threading.Event, prestige_to_pass, tell_prestige):
     with EventQueue() as event_queue:
@@ -182,16 +242,13 @@ def input_process(stop_event: threading.Event, prestige_to_pass, tell_prestige):
                     tool = next((item for item in player_inventory() if item.item in POSSIBLE_TOOL), None)
                     if tool and prestige_to_pass[0] == tool.item:
                         tell_prestige[tool.item] = False
-                        print(f"You disabled the prestige for the {tool.item}")
 
 def message_teller(stop_event: threading.Event):
-    
     PSEUDO_LIST = {
         "gardounai": ["gardou"],
         "LeLeoOriginel": ["leo"]
     }
     player_name = player().name
-    
     if player_name not in PSEUDO_LIST:
         return
     with EventQueue() as event_queue:
@@ -199,8 +256,7 @@ def message_teller(stop_event: threading.Event):
         while not stop_event.is_set():
             ev = event_queue.get()
             if not ev:
-                    continue
-                
+                continue
             if ev.type == EventType.CHAT:
                 msg = (ev.message or "")
                 if "(Message re" in msg and "u de " in msg:
@@ -208,16 +264,12 @@ def message_teller(stop_event: threading.Event):
                 if any(peusdo in msg.lower() and "[Ile]" not in msg for peusdo in PSEUDO_LIST[player_name]):
                     play_mp3(os.path.join(sys.path[0], "chat.mp3"))
 
-
-
-
 def chat_watcher(stop_event: threading.Event):
-    """Continuously store the 10 latest chat messages."""
     with EventQueue() as event_queue:
         event_queue.register_chat_listener()
         while not stop_event.is_set():
             try:
-                ev = event_queue.get()
+                ev = event_queue.get(timeout=0.5)
                 if ev and ev.type == EventType.CHAT:
                     msg = ev.message or ""
                     LAST_CHAT_MESSAGES.append(msg)
@@ -225,40 +277,32 @@ def chat_watcher(stop_event: threading.Event):
                 pass
 
 def tp_checker(stop_event: threading.Event):
+    global actual_dimension
     last_pos = player_position()
-    
     while not stop_event.is_set():
         pos = player_position()
-        if horizontal_distance(last_pos, pos) > 10:
+        if horizontal_distance(last_pos, pos) > 30:
             execute("/fly")
-            sleep(.3)
-            
-        #     for m in reversed(LAST_CHAT_MESSAGES):
-        #         if FLY_ACTIVATE_MSG in m:
-        #             print("A L IS")
-        #             break
-        #         elif FLY_DESACTIVATE_MSG in m:
-        #             print("A L IS")
-        #             execute("/fly")
-        #             break
-        #         elif FLY_NOT_ALLOWED_MSG in m:
-        #             print("AU SPAWN")
-        #             break
-        #         else:
-        #             print("nothing")
-        
+            sleep(2)
+            for m in reversed(LAST_CHAT_MESSAGES):
+                if FLY_ACTIVATE_MSG in m:
+                    actual_dimension = "is"
+                    break
+                elif FLY_DESACTIVATE_MSG in m:
+                    actual_dimension = "is"
+                    execute("/fly")
+                    break
+                elif FLY_NOT_ALLOWED_MSG in m:
+                    actual_dimension = "spawn"
+                    break
         last_pos = pos
         sleep(0.2)
 
-
 if __name__ == "__main__":
-    
     chat(".killAura.disable();")
-    
     display_poros_header()
     stop_event = threading.Event()
     prestige_to_pass = [None]
-
     tell_prestige = {
         "minecraft:diamond_hoe": True,
         "minecraft:diamond_pickaxe": True,

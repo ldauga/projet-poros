@@ -39,9 +39,10 @@ DATA = {
     },
  
     "event": {
+        "start": "1498 104 264",
         "farm": "-385 53 4396",
         "boss_tp": "-385 54 4420",
-        "tp_type": "minecraft:red_sandstone_wall",
+        "tp_type": "minecraft:carved_pumpkin",
         # "boss_tp": {
         #     "position":,
         #     "orientation":,
@@ -51,7 +52,8 @@ DATA = {
 
     },
 }
-
+#/setblock -385 54 6610 minecraft:carved_pumpkin[facing=north]
+#/setblock -385 52 6566 minecraft:beacon
 
 def click_on_event_tp():
 
@@ -117,38 +119,43 @@ def main(stop_event, all_relics):
         try:
             dungeon = sys.argv[1]
             while not stop_event.is_set():
-                execute("warp donjon_" + dungeon.capitalize())
+                if dungeon == "event":
+                    execute("donjon")
+                else:
+                    execute("warp donjon_" + dungeon.capitalize())
                 sleep(2)
                 
-                # if not stop_event.is_set():
-                #     chat('#goto ' + DATA[dungeon]["start"])
-                
-                # while not stop_event.is_set():
-                #     if (entity := player_get_targeted_entity(3)) and has_unprintable_char(entity.name):
-                #         player_press_use(True)
-                #         player_press_use(False)
-                        
-                #         if dungeon == "event":
-                #             sleep(1)
-                #             click_on_event_tp()
-                #         break
-                #     sleep(0.1)
-                # chat("#stop")
-                # sleep(1.5)
+                if dungeon == "event":
+                    if not stop_event.is_set():
+                        chat('#goto ' + DATA[dungeon]["start"])
+                    
+                    while not stop_event.is_set():
+                        if (entity := player_get_targeted_entity(3)) and has_unprintable_char(entity.name):
+                            player_press_use(True)
+                            player_press_use(False)
+                            sleep(1)
+                            click_on_event_tp()
+                            
+                            break
+                        sleep(0.1)
+                    chat("#stop")
+                    sleep(.3)
 
                 if dungeon != "event":
                     farm_zone = DATA[dungeon]["farm"]
-                    tp_zone = DATA[dungeon]["boss_tp"]
+                    tp_zone1 = tp_zone2 = DATA[dungeon]["boss_tp"]
                     boss_kill = DATA[dungeon]["boss_kill"]
+                    
                 else:
                     pos = player().position
                     farm_zone = [-385, 52, pos[2]]
                     farm_zone[2] += 22
                     
-                    tp_zone = [farm_zone[0], farm_zone[1], farm_zone[2]]
-                    tp_zone[2] += 22
+                    tp_zone1 = [farm_zone[0]+4, farm_zone[1] + 2, farm_zone[2]]
+                    tp_zone2 = [farm_zone[0]-4, farm_zone[1] + 2, farm_zone[2] + 50]
                     farm_zone = " ".join([str(int(i)) for i in farm_zone])
-                    tp_zone = " ".join([str(int(i)) for i in tp_zone])
+                    tp_zone1 = " ".join([str(int(i)) for i in tp_zone1])
+                    tp_zone2 = " ".join([str(int(i)) for i in tp_zone2])
                     
                     
                 if not stop_event.is_set():
@@ -165,8 +172,10 @@ def main(stop_event, all_relics):
                     
                 last_pos = player_position()
                 chat("#set allowBreakAnyway " + DATA[dungeon]["tp_type"])
-                chat("#sel pos1 " + DATA[dungeon]["boss_tp"])
-                chat("#sel pos2 " + DATA[dungeon]["boss_tp"])
+                
+                
+                chat("#sel pos1 " + tp_zone1)
+                chat("#sel pos2 " + tp_zone2)
                 
                 chat("#sel cleararea")
                 while not stop_event.is_set():
@@ -186,6 +195,7 @@ def main(stop_event, all_relics):
                         chat("#stop")
                         player_press_use(True)
                         player_press_use(False)
+                        chat("#sel cleararea")
                         # break
                     sleep(0.1)
                     last_pos = pos
