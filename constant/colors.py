@@ -1,0 +1,6 @@
+COMMUN = "dark_green"
+PEU_COMMUN = "#4EA5D9"
+RARE = "dark_purple"
+EPIC = "gold"
+LEGENDARY = "#FF1800"
+MYTHIQUE = "aqua"

@@ -1,0 +1,8 @@
+
+GOLDEN = "home storage"
+THUNE = "HOME THUNE"
+BONBON = "HOME BONBON"
+PETS = "HOME PET"
+COGS = "HOME COGS"
+JETON = "HOME JETON"
+XP = "home XP"
