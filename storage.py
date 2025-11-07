@@ -2,7 +2,7 @@ from time import sleep, time
 from typing import List, Union
 import unicodedata
 
-from pyautogui import click, moveTo, press
+from pyautogui import click, keyDown, keyUp, moveTo, press
 
 import constant.home as HOME_CONSTANT
 from constant.inventory_coordinate import POS_BY_SLOTS
@@ -34,6 +34,7 @@ class TargetZone:
 
     def _open_chest(self, chest_pos, timeout=5.0):
         player_look_at(*chest_pos)
+        sleep(.1)
         click(button="secondary")
         
         start = time()
@@ -61,6 +62,9 @@ class TargetZone:
             inv = self._open_chest(pos)
             print(len(inv))
             
+                            
+                
+            
             # for item in inv:
             #     print(item.slot)
             
@@ -68,8 +72,13 @@ class TargetZone:
                 
                 
                 moveTo(*POS_BY_SLOTS[slot])
-                
-                
+                sleep(.3)
+                keyDown('shift')
+                click()
+                keyUp('shift')
+                sleep(.3)
+                press("Escape")
+                sleep(.3)
                 
                 
             
@@ -242,10 +251,12 @@ def storage():
                 
                 
                 config.store(last_tp_zone, item.slot)
-                
-                
+
                 
                 last_tp_zone = config.tp_zone
                 
                 break
+    keyUp('shift')
+    
+
 storage()
