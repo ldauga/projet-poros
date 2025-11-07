@@ -2,9 +2,10 @@ from time import sleep, time
 from typing import List, Union
 import unicodedata
 
-from pyautogui import click, press
+from pyautogui import click, moveTo, press
 
 import constant.home as HOME_CONSTANT
+from constant.inventory_coordinate import POS_BY_SLOTS
 import constant.storage as STORAGE_CONSTANT
 import constant.colors as COLORS_CONSTANT
 from system.lib.minescript import ItemStack, container_get_items, execute, player_inventory, player_look_at
@@ -64,6 +65,11 @@ class TargetZone:
             #     print(item.slot)
             
             if len(inv) < 54:
+                
+                
+                moveTo(*POS_BY_SLOTS[slot])
+                
+                
                 
                 
             
