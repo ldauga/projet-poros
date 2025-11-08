@@ -1,51 +1,292 @@
-
+``````
 from time import sleep
 from system.lib.minescript import execute, player_look_at
 
 
-CHEST_SAC_POINT_FARM = (41, 110, -25)
-CHEST_BOITE_BOOST = (42, 110, -25)
-CHEST_BOITES_PETS = (43, 110, -25)
-CHEST_RUNES_OUTILS = (43.2, 110, -25)
+# CHEST_SAC_POINT_FARM = (41, 110, -25)
+# CHEST_BOITE_BOOST = (42, 110, -25)
+# CHEST_BOITES_PETS = (43, 110, -25)
+# CHEST_RUNES_OUTILS = (43.2, 110, -25)
 
-CHEST_SAC_AMES = (41, 109.1, -25)
-CHEST_ARMES = (42, 109.1, -25)
-CHEST_PETS = (43, 109.1, -25)
-CHEST_RUNES_COMBATS = (43.2, 109.1, -25)
+# CHEST_SAC_AMES = (41, 109.1, -25)
+# CHEST_ARMES = (42, 109.1, -25)
+# CHEST_PETS = (43, 109.1, -25)
+# CHEST_RUNES_COMBATS = (43.2, 109.1, -25)
 
-CHEST_VIDE_1 = (41, 108.9, -25)
-CHEST_ARMURES_DONJON = (42, 108.9, -25)
-CHEST_ARMURES_MINAGE = (43, 108.9, -25)
-CHEST_ARMURES_FARM = (43.2, 108.9, -25)
+# CHEST_VIDE_1 = (41, 108.9, -25)
+# CHEST_ARMURES_DONJON = (42, 108.9, -25)
+# CHEST_ARMURES_MINAGE = (43, 108.9, -25)
+# CHEST_ARMURES_FARM = (43.2, 108.9, -25)
 
-CHEST_CLEF_LEG_COSMETIQUE = (45.5, 110, -25)
-CHEST_CLEF_DONJON = (46, 110, -25)
-CHEST_VIDE_2 = (47, 110, -25)
-CHEST_VIDE_3 = (48, 110, -25)
+# CHEST_CLEF_LEG_COSMETIQUE = (45.5, 110, -25)
+# CHEST_CLEF_DONJON = (46, 110, -25)
+# CHEST_VIDE_2 = (47, 110, -25)
+# CHEST_VIDE_3 = (48, 110, -25)
 
-CHEST_CLEF_EPIC = (45.5, 109.1, -25)
-CHEST_SLOT_GENS = (46, 109.1, -25)
-CHEST_VIDE_4 = (48, 109.1, -25)
+# CHEST_CLEF_EPIC = (45.5, 109.1, -25)
+# CHEST_SLOT_GENS = (46, 109.1, -25)
+# CHEST_VIDE_4 = (48, 109.1, -25)
 
-CHEST_CLEF_RARE = (45.5, 108.9, -25)
-CHEST_POTION_DONJON = (46, 108.9, -25)
-CHEST_VIDE_5 = (47, 108.9, -25)
-CHEST_VIDE_6 = (48, 108.9, -25)
-
-
+# CHEST_CLEF_RARE = (45.5, 108.9, -25)
+# CHEST_POTION_DONJON = (46, 108.9, -25)
+# CHEST_VIDE_5 = (47, 108.9, -25)
+# CHEST_VIDE_6 = (48, 108.9, -25)
 
 
 
-execute("home storage")
+# CHEST_XP_T1_1 = (57.5, 110.5, -25)
+# CHEST_XP_T1_2 = (57.5, 109, -25)
+# CHEST_XP_T1_3 = (57.5, 108, -25)
+
+# CHEST_XP_T2_1 = (58.5, 110.5, -25)
+# CHEST_XP_T2_2 = (58.5, 109, -25)
+# CHEST_XP_T2_3 = (58.5, 108, -25)
+
+# CHEST_XP_T3_1 = (60.5, 110.5, -25)
+# CHEST_XP_T3_2 = (60.5, 109, -25)
+# CHEST_XP_T3_3 = (60.5, 108, -25)
+
+# CHEST_XP_T4_1 = (62, 111, -23)
+# CHEST_XP_T4_2 = (62, 109, -23)
+# CHEST_XP_T4_3 = (62, 108, -23)
+
+
+
+# CHEST_JETON_T1_1 = (51, 111, -25)
+# CHEST_JETON_T1_2 = (51, 109, -25)
+# CHEST_JETON_T1_3 = (51, 108, -25)
+
+# CHEST_JETON_T2_1 = (52, 111, -25)
+# CHEST_JETON_T2_2 = (52, 109, -25)
+# CHEST_JETON_T2_3 = (52, 108, -25)
+
+# CHEST_JETON_T3_1 = (53, 111, -25)
+# CHEST_JETON_T3_2 = (53, 109, -25)
+# CHEST_JETON_T3_3 = (53, 108, -25)
+
+# CHEST_JETON_T4_1 = (55, 111, -25)
+# CHEST_JETON_T4_2 = (55, 109, -25)
+# CHEST_JETON_T4_3 = (55, 108, -25)
+
+
+
+# CHEST_COGS_T1_1 = (65.8, 111, -20)
+# CHEST_COGS_T1_2 = (65.8, 109, -20)
+# CHEST_COGS_T1_3 = (65.8, 108, -20)
+
+# CHEST_COGS_T2_1 = (66.2, 111, -20)
+# CHEST_COGS_T2_2 = (66.2, 109, -20)
+# CHEST_COGS_T2_3 = (66.2, 108, -20)
+
+# CHEST_COGS_T3_1 = (68, 111, -18)
+# CHEST_COGS_T3_2 = (68, 109, -18)
+# CHEST_COGS_T3_3 = (68, 108, -18)
+
+# CHEST_COGS_T4_1 = (70, 111, -18)
+# CHEST_COGS_T4_2 = (70, 109, -18)
+# CHEST_COGS_T4_3 = (70, 108, -18)
+
+
+
+# CHEST_PET_T1_1 = (34, 111, -25)
+# CHEST_PET_T1_2 = (34, 109, -25)
+# CHEST_PET_T1_3 = (34, 108, -25)
+
+# CHEST_PET_T2_1 = (35, 111, -25)
+# CHEST_PET_T2_2 = (35, 109, -25)
+# CHEST_PET_T2_3 = (35, 108, -25)
+
+# CHEST_PET_T3_1 = (37, 111, -25)
+# CHEST_PET_T3_2 = (37, 109, -25)
+# CHEST_PET_T3_3 = (37, 108, -25)
+
+# CHEST_PET_T4_1 = (39, 111, -25)
+# CHEST_PET_T4_2 = (39, 109, -25)
+# CHEST_PET_T4_3 = (39, 108, -25)
+
+
+
+# CHEST_PET_T1_1 = (34, 111, -25)
+# CHEST_PET_T1_2 = (34, 109, -25)
+# CHEST_PET_T1_3 = (34, 108, -25)
+
+# CHEST_PET_T2_1 = (35, 111, -25)
+# CHEST_PET_T2_2 = (35, 109, -25)
+# CHEST_PET_T2_3 = (35, 108, -25)
+
+# CHEST_PET_T3_1 = (37, 111, -25)
+# CHEST_PET_T3_2 = (37, 109, -25)
+# CHEST_PET_T3_3 = (37, 108, -25)
+
+# CHEST_PET_T4_1 = (39, 111, -25)
+# CHEST_PET_T4_2 = (39, 109, -25)
+# CHEST_PET_T4_3 = (39, 108, -25)
+
+
+
+# CHEST_BONBON_T1_1 = (28, 111, -23)
+# CHEST_BONBON_T1_2 = (28, 109.5, -23)
+# CHEST_BONBON_T1_3 = (28, 108, -23)
+
+# CHEST_BONBON_T2_1 = (29, 111, -23)
+# CHEST_BONBON_T2_2 = (29, 109, -23)
+# CHEST_BONBON_T2_3 = (29, 108, -23)
+
+# CHEST_BONBON_T3_1 = (30.5, 111, -24)
+# CHEST_BONBON_T3_2 = (30.5, 109, -24)
+# CHEST_BONBON_T3_3 = (30.5, 108, -24)
+
+# CHEST_BONBON_T4_1 = (31.5, 111, -24)
+# CHEST_BONBON_T4_2 = (31.5, 109, -24)
+# CHEST_BONBON_T4_3 = (31.5, 108, -24)
+
+
+
+CHEST_THUNE = (21, 109, -19)
+
+
+
+
+execute("HOME THUNE")
 sleep(.3)
-player_look_at(*CHEST_CLEF_RARE)
+player_look_at(*CHEST_THUNE)
 sleep(.3)
-player_look_at(*CHEST_POTION_DONJON)
-sleep(.3)
-player_look_at(*CHEST_VIDE_5)
-sleep(.3)
-player_look_at(*CHEST_VIDE_6)
+
+# execute("HOME BONBON")
+# sleep(.3)
+# player_look_at(*CHEST_BONBON_T1_1)
+# sleep(.3)
+# player_look_at(*CHEST_BONBON_T1_2)
+# sleep(.3)
+# player_look_at(*CHEST_BONBON_T1_3)
+# sleep(.3)
+# player_look_at(*CHEST_BONBON_T2_1)
+# sleep(.3)
+# player_look_at(*CHEST_BONBON_T2_2)
+# sleep(.3)
+# player_look_at(*CHEST_BONBON_T2_3)
+# sleep(.3)
+# player_look_at(*CHEST_BONBON_T3_1)
+# sleep(.3)
+# player_look_at(*CHEST_BONBON_T3_2)
+# sleep(.3)
+# player_look_at(*CHEST_BONBON_T3_3)
+# sleep(.3)
+# player_look_at(*CHEST_BONBON_T4_1)
+# sleep(.3)
+# player_look_at(*CHEST_BONBON_T4_2)
+# sleep(.3)
+# player_look_at(*CHEST_BONBON_T4_3)
+# sleep(.3)
+
+# execute("HOME PET")
+# sleep(.3)
+# player_look_at(*CHEST_PET_T1_1)
+# sleep(.3)
+# player_look_at(*CHEST_PET_T1_2)
+# sleep(.3)
+# player_look_at(*CHEST_PET_T1_3)
+# sleep(.3)
+# player_look_at(*CHEST_PET_T2_1)
+# sleep(.3)
+# player_look_at(*CHEST_PET_T2_2)
+# sleep(.3)
+# player_look_at(*CHEST_PET_T2_3)
+# sleep(.3)
+# player_look_at(*CHEST_PET_T3_1)
+# sleep(.3)
+# player_look_at(*CHEST_PET_T3_2)
+# sleep(.3)
+# player_look_at(*CHEST_PET_T3_3)
+# sleep(.3)
+# player_look_at(*CHEST_PET_T4_1)
+# sleep(.3)
+# player_look_at(*CHEST_PET_T4_2)
+# sleep(.3)
+# player_look_at(*CHEST_PET_T4_3)
+# sleep(.3)
+
+# execute("HOME COGS")
+# sleep(.3)
+# player_look_at(*CHEST_COGS_T1_1)
+# sleep(.3)
+# player_look_at(*CHEST_COGS_T1_2)
+# sleep(.3)
+# player_look_at(*CHEST_COGS_T1_3)
+# sleep(.3)
+# player_look_at(*CHEST_COGS_T2_1)
+# sleep(.3)
+# player_look_at(*CHEST_COGS_T2_2)
+# sleep(.3)
+# player_look_at(*CHEST_COGS_T2_3)
+# sleep(.3)
+# player_look_at(*CHEST_COGS_T3_1)
+# sleep(.3)
+# player_look_at(*CHEST_COGS_T3_2)
+# sleep(.3)
+# player_look_at(*CHEST_COGS_T3_3)
+# sleep(.3)
+# player_look_at(*CHEST_COGS_T4_1)
+# sleep(.3)
+# player_look_at(*CHEST_COGS_T4_2)
+# sleep(.3)
+# player_look_at(*CHEST_COGS_T4_3)
+# sleep(.3)
+
+# execute("HOME JETON")
+# sleep(.3)
+# player_look_at(*CHEST_JETON_T1_1)
+# sleep(.3)
+# player_look_at(*CHEST_JETON_T1_2)
+# sleep(.3)
+# player_look_at(*CHEST_JETON_T1_3)
+# sleep(.3)
+# player_look_at(*CHEST_JETON_T2_1)
+# sleep(.3)
+# player_look_at(*CHEST_JETON_T2_2)
+# sleep(.3)
+# player_look_at(*CHEST_JETON_T2_3)
+# sleep(.3)
+# player_look_at(*CHEST_JETON_T3_1)
+# sleep(.3)
+# player_look_at(*CHEST_JETON_T3_2)
+# sleep(.3)
+# player_look_at(*CHEST_JETON_T3_3)
+# sleep(.3)
+# player_look_at(*CHEST_JETON_T4_1)
+# sleep(.3)
+# player_look_at(*CHEST_JETON_T4_2)
+# sleep(.3)
+# player_look_at(*CHEST_JETON_T4_3)
+# sleep(.3)
+
+# execute("home XP")
+# sleep(.3)
+# player_look_at(*CHEST_XP_T1_1)
+# sleep(.3)
+# player_look_at(*CHEST_XP_T1_2)
+# sleep(.3)
+# player_look_at(*CHEST_XP_T1_3)
+# sleep(.3)
+# player_look_at(*CHEST_XP_T2_1)
+# sleep(.3)
+# player_look_at(*CHEST_XP_T2_2)
+# sleep(.3)
+# player_look_at(*CHEST_XP_T2_3)
+# sleep(.3)
+# player_look_at(*CHEST_XP_T3_1)
+# sleep(.3)
+# player_look_at(*CHEST_XP_T3_2)
+# sleep(.3)
+# player_look_at(*CHEST_XP_T3_3)
+# sleep(.3)
+# player_look_at(*CHEST_XP_T4_1)
+# sleep(.3)
+# player_look_at(*CHEST_XP_T4_2)
+# sleep(.3)
+# player_look_at(*CHEST_XP_T4_3)
 
 
-# def storage():
-    
+
+#def storage():
+``````
