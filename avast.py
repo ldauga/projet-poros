@@ -10,7 +10,7 @@ import winsound
 
 import pyautogui
 
-from pygame_loader import play_mp3
+from utils.pygame_loader import play_mp3
 from system.lib.minescript import EventQueue, EventType, player, player_inventory, player_orientation, player_position
 
 
@@ -186,7 +186,7 @@ def main(stop_event: threading.Event, reset_sound):
             reset_sound[0] = False
         
         if check:
-            play_mp3(os.path.join(sys.path[0], "alarm.mp3"))
+            play_mp3(os.path.join(sys.path[0], "assets/alarm.mp3"))
 
         yaw, pitch = player_orientation()
         pos = player_position()
@@ -212,7 +212,7 @@ def main(stop_event: threading.Event, reset_sound):
             
             pyautogui.press("F7")
             
-            play_mp3(os.path.join(sys.path[0], "alarm.mp3"))
+            play_mp3(os.path.join(sys.path[0], "assets/alarm.mp3"))
 
         
         # if abs(last_yaw - yaw) > 90:
@@ -223,7 +223,7 @@ def main(stop_event: threading.Event, reset_sound):
             
         #     pyautogui.press("F7")
             
-        #     play_mp3(os.path.join(sys.path[0], "alarm.mp3"))
+        #     play_mp3(os.path.join(sys.path[0], "assets/alarm.mp3"))
 
         
         if tool is None or tool.slot != last_tool.slot or tool.selected != last_tool.selected:
@@ -234,7 +234,7 @@ def main(stop_event: threading.Event, reset_sound):
             
             pyautogui.press("F7")
             
-            play_mp3(os.path.join(sys.path[0], "alarm.mp3"))
+            play_mp3(os.path.join(sys.path[0], "assets/alarm.mp3"))
 
         
         

@@ -298,7 +298,7 @@ def find_closest_variant(query: str, blocks: list, cutoff: float = 0.6) -> str |
     return False, None
     
 def main(stop_event):
-    with open(sys.path[0] + '/blocklist.json') as f:
+    with open(sys.path[0] + '/assets/blocklist.json') as f:
         data = json.load(f)
         if len(sys.argv) < 2:
             echo("Usage: \\orapa <block_type>")

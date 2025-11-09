@@ -1,5 +1,5 @@
 
-POS_BY_SLOTS = {
+POS_BY_SLOTS_DOUBLE_CHEST = {
     0: (743, 808),
     1: (800, 808),
     2: (851, 808),

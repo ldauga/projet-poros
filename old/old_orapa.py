@@ -453,7 +453,7 @@ def main(tracked_block: str):
                         ok = hold_attack_until_broken(tracked_block, target)
 
                 
-with open(sys.path[0] + '/blocklist.json') as f:
+with open(sys.path[0] + '/assets/blocklist.json') as f:
     data = json.load(f)
     if len(sys.argv) < 2:
         echo("Usage: \\orapa <block_type>")

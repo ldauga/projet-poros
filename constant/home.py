@@ -1,8 +1,12 @@
+from Class import Home
 
-GOLDEN = "home storage"
-THUNE = "HOME THUNE"
-BONBON = "HOME BONBON"
-PETS = "HOME PET"
-COGS = "HOME COGS"
-JETON = "HOME JETON"
-XP = "home XP"
+GOLDEN = Home("storage")
+THUNE = Home("THUNE")
+BONBON = Home("BONBON")
+PETS = Home("PET")
+COGS = Home("COGS")
+JETON = Home("JETON")
+XP = Home("XP")
+
+
+

@@ -10,9 +10,11 @@ import winsound
 from time import sleep
 
 from avast import distance_between_points
-from pygame_loader import play_mp3
+from utils.pygame_loader import play_mp3
 from system.lib.minescript import EventQueue, EventType, chat, echo, execute, flush, player, player_inventory, player_position
 from collections import deque
+
+from utils.storage import storage
 
 STOP_KEY = 333
 
@@ -144,7 +146,7 @@ def prestige_teller(stop_event: threading.Event, prestige_to_pass, tell_prestige
             sleep(0.1)
             continue
         if tell_prestige.get(prestige_to_pass[0], False):
-            play_mp3(os.path.join(sys.path[0], "bing.mp3"))
+            play_mp3(os.path.join(sys.path[0], "asstes/bing.mp3"))
         sleep(10)
 
 def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestige):
@@ -181,7 +183,7 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestig
 
                     if level >= required_level and tool:
                         prestige_to_pass[0] = tool.item
-                        play_mp3(os.path.join(sys.path[0], "bing.mp3"))
+                        play_mp3(os.path.join(sys.path[0], "asstes/bing.mp3"))
 
                 elif f"{player_name.lower()} vient de passer prestige" in msg:
                     tool = next((item for item in player_inventory() if item.item in POSSIBLE_TOOL), None)
@@ -215,8 +217,8 @@ def balise(stop_event: threading.Event):
             if not last_storage_time:
                 last_storage_time = datetime.now()
             elif ((datetime.now() - last_storage_time).total_seconds() * 1000) > 3000:
+                storage()
                 last_storage_time = 0
-                print('oui')
             pass
         else:
             last_storage_time = 0
@@ -260,9 +262,9 @@ def message_teller(stop_event: threading.Event):
             if ev.type == EventType.CHAT:
                 msg = (ev.message or "")
                 if "(Message re" in msg and "u de " in msg:
-                    play_mp3(os.path.join(sys.path[0], "chat.mp3"))
+                    play_mp3(os.path.join(sys.path[0], "assets/chat.mp3"))
                 if any(peusdo in msg.lower() and "[Ile]" not in msg for peusdo in PSEUDO_LIST[player_name]):
-                    play_mp3(os.path.join(sys.path[0], "chat.mp3"))
+                    play_mp3(os.path.join(sys.path[0], "assets/chat.mp3"))
 
 def chat_watcher(stop_event: threading.Event):
     with EventQueue() as event_queue:
