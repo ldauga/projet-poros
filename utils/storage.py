@@ -44,3 +44,6 @@ def storage():
             for config, slot in pairs:
                 config.store(last_zone, slot)
                 last_zone = zone
+    
+    
+    echo("[Storage]: Finish.")
