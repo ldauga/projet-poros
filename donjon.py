@@ -30,13 +30,20 @@ DATA = {
         "boss_kill": "1575 53 -60",
     },
         
-    
     "bunker": {
         "farm": "517 81 647",
         "boss_tp": "584 79 662",
         "tp_type": "minecraft:sea_lantern",
         "boss_kill": "-353 58 -111",
     },
+
+    "forge": {
+        "farm": " -3044 33 -1702  ",
+        "boss_tp": "-2923 35 -1758",
+        "tp_type": "minecraft:sea_lantern",
+        "boss_kill": "960 -19 331",
+    },
+
  
     "event": {
         "start": "1498 104 264",
