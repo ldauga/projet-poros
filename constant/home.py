@@ -1,6 +1,6 @@
 from Class import Home
 
-GOLDEN = Home("storage")
+GOLDEN = Home("GOLDEN")
 THUNE = Home("THUNE")
 BONBON = Home("BONBON")
 PETS = Home("PET")
