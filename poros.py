@@ -217,7 +217,12 @@ def balise(stop_event: threading.Event):
             if not last_storage_time:
                 last_storage_time = datetime.now()
             elif ((datetime.now() - last_storage_time).total_seconds() * 1000) > 3000:
-                storage()
+                
+                try:
+                    storage()
+                except Exception as e:
+                    echo(e)
+                
                 last_storage_time = 0
             pass
         else:
