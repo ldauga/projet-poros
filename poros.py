@@ -146,7 +146,7 @@ def prestige_teller(stop_event: threading.Event, prestige_to_pass, tell_prestige
             sleep(0.1)
             continue
         if tell_prestige.get(prestige_to_pass[0], False):
-            play_mp3(os.path.join(sys.path[0], "asstes/bing.mp3"))
+            play_mp3(os.path.join(sys.path[0], "assets/bing.mp3"))
         sleep(10)
 
 def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestige):
@@ -183,7 +183,7 @@ def prestige_checker(stop_event: threading.Event, prestige_to_pass, tell_prestig
 
                     if level >= required_level and tool:
                         prestige_to_pass[0] = tool.item
-                        play_mp3(os.path.join(sys.path[0], "asstes/bing.mp3"))
+                        play_mp3(os.path.join(sys.path[0], "assets/bing.mp3"))
 
                 elif f"{player_name.lower()} vient de passer prestige" in msg:
                     tool = next((item for item in player_inventory() if item.item in POSSIBLE_TOOL), None)
