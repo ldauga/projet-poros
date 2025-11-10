@@ -52,8 +52,6 @@ def chat_command_process(stop_event):
                                 last_command_time = time.time()
                                 last_sender = pseudo
                                 
-                                print("parse command: ", command)
-                                
                                 if len(command) > 1:
                                     if command[1] == "tpyes":
                                         execute("tpyes")
