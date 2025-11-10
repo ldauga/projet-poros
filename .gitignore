@@ -1,2 +1,4 @@
 system/*
 config.txt
+
+/**__pycache__/

@@ -1,6 +1,6 @@
 import threading
 import time
-from system.lib.minescript import EventQueue, EventType, execute, player
+from system.lib.minescript import EventQueue, EventType, chat, execute, player
 
 
 
@@ -52,9 +52,17 @@ def chat_command_process(stop_event):
                                 last_command_time = time.time()
                                 last_sender = pseudo
                                 
+                                if len(command) > 1:
+                                    if command[1] == "tpyes":
+                                        execute("tpyes")
+                                    elif command[1] == "afk":
+                                        execute("warp afk")
+                                    elif command[1] == "say":
+                                        chat(" ".join(command[2]))
                                 
                                 
-                                print("parse command")
+                                
+                                
     finally:
         
         

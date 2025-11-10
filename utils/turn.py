@@ -22,7 +22,6 @@ def look_at_subject(start_pos, end_pos, orientation, steps=30, curve_strength=0.
     curve_strength: strength of curve applied to movement
     """
 
-    # Compute yaw and pitch required to face target
     dx = end_pos[0] - start_pos[0]
     dy = end_pos[1] - start_pos[1]
     dz = end_pos[2] - start_pos[2]
@@ -31,18 +30,15 @@ def look_at_subject(start_pos, end_pos, orientation, steps=30, curve_strength=0.
     dist_xz = math.sqrt(dx*dx + dz*dz)
     target_pitch = -math.degrees(math.atan2(dy, dist_xz))
 
-    # Starting orientation (could be dynamic; here assume forward = yaw=0, pitch=0)
     yaw, pitch = orientation
 
-    # Deltas
     delta_y = target_yaw - yaw
     delta_p = target_pitch - pitch
 
-    # Perpendicular offsets for smooth curve
     perp_yaw = -delta_p * 0.1
     perp_pitch = delta_y * 0.1
 
-    BASE_DELAY = 0.02  # base time between steps
+    BASE_DELAY = 0.02
 
     for i in range(1, steps + 1):
         frac = i / steps
