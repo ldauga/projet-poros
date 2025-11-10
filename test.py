@@ -36,7 +36,7 @@ def chat_command_process(stop_event):
                     msg = (ev.message or "")
                     
                     
-                    if "(Message " in msg:
+                    if "(Message " in msg and not "envoy" in msg:
                         
                         if "LeLeoOriginel" in msg or "gardounai" in msg:
                             
