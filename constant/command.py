@@ -1,0 +1,3 @@
+PETS = "pets"
+SHOP = "shop"
+
