@@ -282,6 +282,7 @@ def chat_watcher(stop_event: threading.Event):
                     LAST_CHAT_MESSAGES.append(msg)
                     
                     if ("gardounai" in msg or "LeLeoOriginel" in msg or "zebraxxx" in msg or "ClaudeCode" in msg) and "souhaite se t" in msg and "porter" in msg:
+                        sleep(.2)
                         execute("tpyes")
             except Exception:
                 pass
