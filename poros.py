@@ -280,8 +280,6 @@ def chat_watcher(stop_event: threading.Event):
                 if ev and ev.type == EventType.CHAT:
                     msg = ev.message or ""
                     LAST_CHAT_MESSAGES.append(msg)
-                    if "oui" not in msg:
-                        print("oui" + msg)
                     
                     if ("gardounai" in msg or "LeLeoOriginel" in msg or "zebraxxx" in msg or "ClaudeCode" in msg) and "souhaite se t" in msg and "porter" in msg:
                         execute("tpyes")
