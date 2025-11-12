@@ -2,8 +2,10 @@ import json
 import sys
 import threading
 import time
-from system.lib.minescript import EventQueue, EventType, container_get_items, execute, player_inventory, player_inventory_slot_to_hotbar, player_look_at
+from system.lib.minescript import EventQueue, EventType, container_get_items, execute, player_inventory, player_inventory_slot_to_hotbar, player_look_at, player_press_drop
 import pyautogui
+
+from utils.get_selected_item import get_selected_item
 
 
 
@@ -17,9 +19,9 @@ POS_HARD = (1015, 411)
 POS_VERY_HARD = (1070, 411)
 
 
-CHEST_CULTURES = (-32 + .5, -57 + .5, -2 + .5)
-CHEST_MINERAIS = (-32 + .5, -57 + .5, -4 + .5)
-NONE_BLOCK = (-32 + .5, -57 + .5, -3 + .5)
+# CHEST_CULTURES = (-32 + .5, -57 + .5, -2 + .5)
+CHEST_MINERAIS = (75, 121.7, -14.5)
+NONE_BLOCK = (76 + .5, 121 + .5, -15 + .5)
 
 
 
@@ -95,9 +97,15 @@ def main(stop_event: threading.Event):
 
             pyautogui.press("Escape")
 
-            for i in range(1, 10):
-                pyautogui.press(str(i))
+            for i in range(1, 9):
+                pyautogui.press(str(9-i))
                 pyautogui.click(button="secondary", duration=0.1)
+                
+                if (item := get_selected_item()) is not None and "cultures" in json.dumps(item.__dict__):
+                    player_press_drop(True)
+                    player_press_drop(False)
+            pyautogui.press(str(9))
+                
 
             inv = player_inventory()
             
@@ -107,6 +115,10 @@ def main(stop_event: threading.Event):
             pyautogui.click(button="secondary")
             
             pyautogui.keyDown('shift')
+            
+            # for item in parchemins:
+            #     if "cultures" in json.dumps(item.__dict__):
+                    
             
             for item in parchemins:
                 if "minerais" in json.dumps(item.__dict__):
@@ -120,28 +132,28 @@ def main(stop_event: threading.Event):
             pyautogui.keyUp('shift')
             pyautogui.press("Escape")
             
-            player_look_at(*CHEST_CULTURES)
+            # player_look_at(*CHEST_CULTURES)
 
-            pyautogui.click(button="secondary")
+            # pyautogui.click(button="secondary")
             
-            pyautogui.keyDown('shift')
+            # pyautogui.keyDown('shift')
             
-            for item in parchemins:
-                if "cultures" in json.dumps(item.__dict__):
+            # for item in parchemins:
+            #     if "cultures" in json.dumps(item.__dict__):
                     
-                    pyautogui.moveTo(**SLOTS[item.slot], duration=0)
-                    pyautogui.click(duration=0)
-                    if stop_event.is_set():
-                        return
+            #         pyautogui.moveTo(**SLOTS[item.slot], duration=0)
+            #         pyautogui.click(duration=0)
+            #         if stop_event.is_set():
+            #             return
 
-            pyautogui.keyUp('shift')
+            # pyautogui.keyUp('shift')
 
-            pyautogui.press("Escape")
+            # pyautogui.press("Escape")
 
             
             
-            if len(parchemins) < 8:
-                return
+            # if len(parchemins) < 8:
+            #     return
     finally:
         pyautogui.keyUp('shift')
 
