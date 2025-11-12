@@ -38,7 +38,7 @@ DATA = {
     },
 
     "forge": {
-        "farm": " -3044 33 -1702  ",
+        "farm": " -3024 31 -1757  ",
         "boss_tp": "-2923 35 -1758",
         "tp_type": "minecraft:sea_lantern",
         "boss_kill": "960 -19 331",
