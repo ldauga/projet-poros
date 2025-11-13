@@ -21,7 +21,7 @@ POS_VERY_HARD = (1070, 411)
 
 # CHEST_CULTURES = (-32 + .5, -57 + .5, -2 + .5)
 CHEST_MINERAIS = (75, 121.7, -14.5)
-NONE_BLOCK = (76 + .5, 121 + .5, -15 + .5)
+NONE_BLOCK = (76 + .5, 121 + .6, -15 + .5)
 
 
 
@@ -100,6 +100,7 @@ def main(stop_event: threading.Event):
             for i in range(1, 9):
                 pyautogui.press(str(9-i))
                 pyautogui.click(button="secondary", duration=0.1)
+                time.sleep(.2)
                 
                 if (item := get_selected_item()) is not None and "cultures" in json.dumps(item.__dict__):
                     player_press_drop(True)
