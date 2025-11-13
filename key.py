@@ -37,7 +37,7 @@ def main(stop_event):
     while not stop_event.is_set():
         click(button="secondary")
         sleep(.2)
-        moveTo(480, 531)
+        moveTo(483, 505)
         # moveTo(1066, 435) #jeton
         click()
 
