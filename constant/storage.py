@@ -1,3 +1,7 @@
+from time import sleep
+from system.lib.minescript import player_look_at
+
+
 CHEST_SAC_POINT_FARM = (41, 110, -25)
 CHEST_BOITE_BOOST = (42, 110, -25)
 CHEST_BOITES_PETS = (43, 110, -25)
@@ -171,24 +175,23 @@ CHEST_BOITE_BONBON = (32.5, 109, -24)
 CHEST_THUNE = (21, 109, -19)
  
 
-CHEST_RUNE_T1_1 = (6, 110, -1)
-CHEST_RUNE_T1_2 = (6, 109, -1)
-CHEST_RUNE_T1_3 = (6, 108, -1)
+CHEST_RUNE_T1_1 = (6, 111, -0.5)
+CHEST_RUNE_T1_2 = (6, 109, -0.5)
+CHEST_RUNE_T1_3 = (6, 108, -0.5)
 
-CHEST_RUNE_T2_1 = (6, 110, -2)
+CHEST_RUNE_T2_1 = (6, 111, -2)
 CHEST_RUNE_T2_2 = (6, 109, -2)
 CHEST_RUNE_T2_3 = (6, 108, -2)
 
-CHEST_RUNE_T3_1 = (7, 110, -3)
+CHEST_RUNE_T3_1 = (7, 110.5, -3)
 CHEST_RUNE_T3_2 = (7, 109, -3)
 CHEST_RUNE_T3_3 = (7, 108, -3)
 
-CHEST_RUNE_T4_1 = (7, 110, -4)
+CHEST_RUNE_T4_1 = (7, 110.5, -4)
 CHEST_RUNE_T4_2 = (7, 109, -4)
 CHEST_RUNE_T4_3 = (7, 108, -4)
 
-CHEST_RUNE_T5_1 = (8, 110, -5)
+CHEST_RUNE_T5_1 = (8, 110.3, -5)
 CHEST_RUNE_T5_2 = (8, 109, -5)
 CHEST_RUNE_T5_3 = (8, 108, -5)
-
 
