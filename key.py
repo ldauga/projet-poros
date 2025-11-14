@@ -8,6 +8,7 @@
 
 
 
+
 import threading
 from time import sleep
 
@@ -34,9 +35,9 @@ def kill_process(stop_event: threading.Event):
 
 def main(stop_event):
     while not stop_event.is_set():
-        click()
+        click(button="secondary")
         sleep(.2)
-        moveTo(963, 318) # epreuve
+        moveTo(483, 505)
         # moveTo(1066, 435) #jeton
         click()
 
@@ -60,6 +61,7 @@ if __name__ == "__main__":
 
     t1.join()
     t2.join()
+
 
 
 
